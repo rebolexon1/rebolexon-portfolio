@@ -4,96 +4,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfólio - Rebolexon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* Estilo base */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
+      font-family: "Segoe UI", sans-serif;
+      background: #000;
       color: #fff;
       text-align: center;
+      overflow-x: hidden;
     }
+
     header {
-      padding: 30px 15px;
-      border-bottom: 2px solid #333;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #4b0082, #8a2be2);
+      animation: fadeIn 1.5s ease;
     }
+
     header h1 {
-      font-size: 2em;
       margin: 0;
+      font-size: 2.5em;
     }
+
     header p {
-      color: #bbb;
-      margin: 5px 0 0;
+      margin: 10px 0 0;
+      color: #ccc;
     }
+
     section {
-      max-width: 700px;
+      max-width: 800px;
       margin: 40px auto;
-      padding: 0 15px;
+      padding: 20px;
       text-align: left;
+      animation: slideUp 1.2s ease;
     }
+
     h2 {
-      border-bottom: 1px solid #333;
-      padding-bottom: 8px;
-      margin-bottom: 20px;
+      border-left: 4px solid #8a2be2;
+      padding-left: 10px;
+      margin-bottom: 15px;
     }
+
     ul {
       list-style: none;
       padding: 0;
     }
+
     ul li {
       background: #111;
-      margin: 8px 0;
+      margin: 10px 0;
       padding: 12px;
       border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s;
     }
+
+    ul li:hover {
+      transform: translateX(6px);
+      background: #1a1a1a;
+    }
+
+    .icon {
+      color: #8a2be2;
+      min-width: 25px;
+      text-align: center;
+    }
+
     footer {
-      margin-top: 40px;
       padding: 20px;
-      border-top: 2px solid #333;
-      color: #888;
+      margin-top: 40px;
+      border-top: 1px solid #333;
+      font-size: 0.9em;
+      color: #aaa;
     }
-    a {
-      color: #1db954;
-      text-decoration: none;
+
+    /* Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Rebolexon</h1>
-    <p>Community Administrator</p>
+    <p>🌙 Community Administrator & Server Builder</p>
   </header>
 
   <section>
-    <h2>Experiência</h2>
+    <h2><i class="fa-solid fa-briefcase icon"></i> Experiência</h2>
     <ul>
-      <li>Coordinator – The Ocean (53k members)</li>
-      <li>Community Manager – Vampzin Community (6k members)</li>
-      <li>Community Moderator – PlaggVers (48k members)</li>
-      <li>Community Moderator – MDL (75k members)</li>
+      <li><i class="fa-solid fa-user-tie icon"></i> Coordinator – The Ocean (53k members)</li>
+      <li><i class="fa-solid fa-people-group icon"></i> Community Manager – Vampzin Community (6k members)</li>
+      <li><i class="fa-solid fa-shield-halved icon"></i> Community Moderator – PlaggVers (48k members)</li>
+      <li><i class="fa-solid fa-shield-halved icon"></i> Community Moderator – MDL (75k members)</li>
     </ul>
   </section>
 
   <section>
-    <h2>Skills</h2>
+    <h2><i class="fa-solid fa-lightbulb icon"></i> Skills</h2>
     <ul>
-      <li>Community Administration & Moderation</li>
-      <li>Team Coordination</li>
-      <li>Server Growth & Engagement</li>
-      <li>Safe Environment Management</li>
+      <li><i class="fa-solid fa-user-gear icon"></i> Community Administration & Moderation</li>
+      <li><i class="fa-solid fa-people-arrows icon"></i> Team Coordination</li>
+      <li><i class="fa-solid fa-chart-line icon"></i> Server Growth & Engagement</li>
+      <li><i class="fa-solid fa-shield-heart icon"></i> Safe Environment Management</li>
     </ul>
   </section>
 
   <section>
-    <h2>Sobre Mim</h2>
+    <h2><i class="fa-solid fa-user icon"></i> Sobre Mim</h2>
     <p>
-      Community Administrator com experiência em servidores de 6k a 75k membros. 
-      Especializado em coordenação de staff, construção de comunidades estruturadas 
-      e promoção de ambientes seguros e engajadores.
+      Community Administrator com experiência gerindo comunidades de 6k a 75k membros. 
+      Apaixonado por construir servidores organizados, coordenar equipes e manter ambientes seguros e divertidos.
     </p>
   </section>
 
   <footer>
-    <p>📧 Contato: <a href="mailto:rebolexonxon@gmail.com">rebolexonxon@gmail.com</a></p>
+    <p>Feito com 💜 por Rebolexon — <a href="mailto:rebolexonxon@gmail.com" style="color:#8a2be2;">rebolexonxon@gmail.com</a></p>
   </footer>
 </body>
   </html>
