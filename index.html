@@ -7,236 +7,136 @@
   <style>
     /* Fundo animado */
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #dbeafe, #93c5fd, #60a5fa);
-      background-size: 300% 300%;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(-45deg, #4facfe, #00f2fe, #43e97b, #38f9d7);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
       color: #333;
-      animation: gradientMove 12s ease infinite;
     }
-
-    @keyframes gradientMove {
+    @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Header */
     header {
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 20px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 30px 20px;
       text-align: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
-      text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
-      animation: fadeIn 2s ease;
-    }
-
-    header p {
-      margin: 5px 0 0;
-      font-size: 1.2rem;
-      animation: fadeIn 3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Seções */
-    main {
-      padding: 20px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      color: #1e3a8a;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+      font-size: 2.2rem;
     }
 
     section {
-      margin-bottom: 40px;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    section h2 {
+      color: #004aad;
+      margin-bottom: 15px;
     }
 
-    /* Sobre Mim */
-    .about {
-      background: #fff;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      max-width: 850px;
-      margin: 0 auto 40px;
+    .project-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      margin: 20px 0;
+      padding: 15px;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-
-    .about:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
     }
-
-    .about ul {
-      text-align: left;
-      max-width: 600px;
-      margin: 20px auto;
-      list-style: none;
-      padding: 0;
+    .project-card img {
+      max-width: 100%;
+      border-radius: 12px;
     }
-
-    .about li {
-      margin: 12px 0;
-      font-size: 1.1rem;
+    .project-card h3 {
+      margin: 10px 0;
     }
-
-    .about a {
-      color: #2563eb;
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 18px;
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      color: white;
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.3s;
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.2s;
     }
-
-    .about a:hover {
-      color: #1e40af;
-      text-decoration: underline;
-    }
-
-    /* Cards */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .card:hover img {
-      transform: scale(1.08);
-    }
-
-    .card h3 {
-      margin: 15px 0 10px;
-      color: #1e3a8a;
-    }
-
-    .card p {
-      padding: 0 15px 20px;
-      font-size: 0.95rem;
-    }
-
-    .card a {
-      color: inherit;
-      text-decoration: none;
-      display: block;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.85);
-      color: #fff;
-      margin-top: 30px;
-      box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
-    }
-
-    footer a {
-      color: #93c5fd;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: #fff;
+    .btn:hover {
+      background: linear-gradient(90deg, #0056b3, #0096c7);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Portfólio Rebolexon</h1>
-    <p>Bem-vindo ao meu site profissional!</p>
   </header>
 
-  <main>
-    <section class="about">
-      <h2>Sobre Mim</h2>
-      <p>Sou <strong>Community Administrator</strong> com experiência em gerenciamento de servidores de 6k a 75k membros. 
-      Atuo com coordenação de equipes, administração de comunidades e criação de ambientes seguros e engajadores.</p>
-      <ul>
-        <li><b>Coordenador</b> – <a href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">The Ocean (53k membros)</a></li>
-        <li><b>Community Manager</b> – <a href="https://discord.gg/6uRgP7fg" target="_blank">Vampzin Community (6k membros)</a></li>
-        <li><b>Community Moderator</b> – <a href="https://discord.gg/plaggxzin" target="_blank">PlaggVers (48k membros)</a></li>
-        <li><b>Community Moderator</b> – <a href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">MDL (75k membros)</a></li>
-      </ul>
-    </section>
+  <!-- SOBRE MIM -->
+  <section>
+    <h2>Sobre Mim</h2>
+    <p>Sou <b>Community Administrator</b> com experiência em gerenciamento de servidores de 6k a 75k membros. Atuo com coordenação de equipes, administração de comunidades e criação de ambientes seguros e engajadores.</p>
+    <p><b>Coordenador</b> – The Ocean (53k membros)</p>
+    <p><b>Community Manager</b> – Vampzin Community (6k membros)</p>
+    <p><b>Community Moderator</b> – PlaggVers (48k membros)</p>
+    <p><b>Community Moderator</b> – MDL (75k membros)</p>
+  </section>
 
-    <section>
-      <h2>Meus Projetos</h2>
-      <div class="cards">
-        <div class="card">
-          <a href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">
-            <img src="cd7d6bbe3c8769a93be067d8ded64040.png" alt="The Ocean">
-            <h3>The Ocean</h3>
-            <p>Atuação como Coordenador em uma comunidade com mais de 53k membros.</p>
-          </a>
-        </div>
+  <!-- PROJETOS -->
+  <section>
+    <h2>Meus Projetos</h2>
 
-        <div class="card">
-          <a href="https://discord.gg/6uRgP7fg" target="_blank">
-            <img src="f3c3e109e5d0672f4682ad44d7c86627.png" alt="Vampzin Community">
-            <h3>Vampzin Community</h3>
-            <p>Atuação como Community Manager em um servidor de 6k membros.</p>
-          </a>
-        </div>
+    <div class="project-card">
+      <img src="img/theocean.png" alt="The Ocean">
+      <h3>The Ocean</h3>
+      <p>Atuo como Coordenador deste servidor com mais de 53k membros.</p>
+      <a class="btn" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Entrar no Servidor</a>
+    </div>
 
-        <div class="card">
-          <a href="https://discord.gg/plaggxzin" target="_blank">
-            <img src="3dcd5047d030ffc7129744e06de52869.png" alt="PlaggVers">
-            <h3>PlaggVers</h3>
-            <p>Moderação de comunidade com mais de 48k membros.</p>
-          </a>
-        </div>
+    <div class="project-card">
+      <img src="img/vampzin.png" alt="Vampzin Community">
+      <h3>Vampzin Community</h3>
+      <p>Exerço o cargo de Community Manager em uma comunidade de 6k membros.</p>
+      <a class="btn" href="https://discord.gg/6uRgP7fg" target="_blank">Entrar no Servidor</a>
+    </div>
 
-        <div class="card">
-          <a href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">
-            <img src="a_99245d3237389a54e084d6ca512572c8.gif" alt="MDL">
-            <h3>MDL</h3>
-            <p>Moderação em uma das maiores comunidades com 75k membros.</p>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+    <div class="project-card">
+      <img src="img/plaggverse.png" alt="PlaggVers">
+      <h3>PlaggVers</h3>
+      <p>Participo como Community Moderator em um servidor de 48k membros.</p>
+      <a class="btn" href="https://discord.gg/plaggxzin" target="_blank">Entrar no Servidor</a>
+    </div>
 
-  <footer>
-    <p>© 2025 Rebolexon - Todos os direitos reservados.</p>
-    <p>📧 <a href="mailto:rebolexonxon@gmail.com">rebolexonxon@gmail.com</a></p>
-  </footer>
+    <div class="project-card">
+      <img src="img/mdl.png" alt="Mundo da Lua">
+      <h3>Mundo da Lua</h3>
+      <p>Sou Community Moderator neste servidor com 75k membros.</p>
+      <a class="btn" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Entrar no Servidor</a>
+    </div>
+
+  </section>
+
+  <!-- CONTATO -->
+  <section>
+    <h2>Contato</h2>
+    <p>📩 Você pode falar comigo pelo email:</p>
+    <p><a class="btn" href="mailto:rebolexonxon@gmail.com">rebolexonxon@gmail.com</a></p>
+  </section>
 </body>
-  </html>
+</html>
