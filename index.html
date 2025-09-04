@@ -13,43 +13,60 @@
       color: #fff;
       overflow-x: hidden;
     }
+    /* Fundo com partículas */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    /* Navbar */
     nav {
       display: flex;
       justify-content: center;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
+      box-shadow: 0 0 20px rgba(6,182,212,0.5);
       backdrop-filter: blur(8px);
-      padding: 8px 0;
+      padding: 6px 0;
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
+      transition: all 0.4s ease;
     }
     nav a {
       color: #fff;
-      margin: 0 15px;
-      font-size: 14px;
+      margin: 0 12px;
+      font-size: 13px;
       text-decoration: none;
       font-weight: bold;
       transition: transform 0.3s ease, color 0.3s ease;
     }
     nav a:hover {
       color: #06b6d4;
-      transform: scale(1.2);
+      transform: scale(1.25);
+      text-shadow: 0 0 12px #06b6d4;
     }
+    /* Seções */
     section {
       min-height: 100vh;
       padding: 120px 20px 60px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    section.active {
+      opacity: 1;
+      transform: translateY(0);
     }
     h1, h2, h3 {
       margin-bottom: 20px;
       text-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-    .headline p {
-      font-size: 18px;
-      opacity: 0.85;
     }
     .floating {
       background: rgba(255,255,255,0.08);
@@ -76,7 +93,7 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 0 25px rgba(0,0,0,0.7);
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, opacity 0.8s ease;
     }
     .card:hover {
       transform: translateY(-8px) scale(1.03);
@@ -151,6 +168,10 @@
   </style>
 </head>
 <body>
+  <!-- Partículas -->
+  <div id="particles-js"></div>
+
+  <!-- Menu -->
   <nav>
     <a href="#about"><i class="ri-user-3-line"></i> Apresentação</a>
     <a href="#work"><i class="ri-community-line"></i> Comunidades</a>
@@ -158,7 +179,7 @@
   </nav>
 
   <!-- Seção Apresentação -->
-  <section id="about">
+  <section id="about" class="active">
     <h1>Rebolexon</h1>
     <div class="floating">👋 Administrador de comunidades no Discord com mais de <b>3 anos de experiência</b>.</div>
     <div class="floating">🛡️ Especialista em segurança, moderação e suporte estratégico para equipes.</div>
@@ -223,6 +244,48 @@
       🚀 Pronto para começar seu novo projeto?<br> Vamos construir algo incrível juntos!
     </div>
   </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script>
+    /* Config Particles.js */
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.6 },
+        "size": { "value": 3 },
+        "move": { "enable": true, "speed": 1.2 }
+      }
+    });
+
+    /* Animação de transição entre seções */
+    const links = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    function showSection(hash) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      const target = document.querySelector(hash);
+      if (target) {
+        setTimeout(() => {
+          target.classList.add('active');
+        }, 300);
+      }
+    }
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const hash = link.getAttribute('href');
+        window.history.pushState(null, null, hash);
+        showSection(hash);
+      });
+    });
+
+    // Mostra a primeira seção ativa
+    showSection(location.hash || "#about");
+  </script>
 </body>
 </html>
           
