@@ -63,6 +63,21 @@
     }
     nav a:hover { color: var(--accent2); }
 
+    /* Transição de página overlay */
+    #page-transition {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      z-index:2000;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .8s ease;
+      pointer-events:none;
+    }
+    #page-transition.active {
+      transform: scaleX(1);
+    }
+
     /* Partículas */
     canvas#fx {
       position:fixed;
@@ -72,8 +87,11 @@
       pointer-events:none;
     }
 
-    /* Balões de fala */
+    /* Balões de fala com ícones */
     .speech {
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
       background: rgba(20,20,40,.7);
       border: 1px solid #333;
       border-radius: 18px;
@@ -82,6 +100,13 @@
       max-width: 700px;
       animation: float 3s ease-in-out infinite;
       box-shadow: 0 0 20px rgba(139,92,246,.3);
+      text-align:left;
+    }
+    .speech i {
+      font-size: 26px;
+      color: var(--accent2);
+      flex-shrink:0;
+      margin-top:2px;
     }
     @keyframes float {
       0%,100% { transform: translateY(0); }
@@ -122,7 +147,6 @@
       border-radius:12px;
       margin-bottom:15px;
     }
-    .card h3 { margin-bottom:10px; }
     .join-btn {
       display:inline-block;
       margin-top:10px;
@@ -177,20 +201,17 @@
     <a href="#contato">Contato</a>
   </nav>
 
+  <!-- Overlay de transição -->
+  <div id="page-transition"></div>
+
   <canvas id="fx"></canvas>
 
   <!-- PAGE 1 -->
   <section id="apresentacao">
     <h1>👋 Olá, eu sou o Rebolexon</h1>
-    <div class="speech">
-      Sou administrador e construtor de servidores Discord, com experiência em comunidades de 6k a 75k membros.
-    </div>
-    <div class="speech">
-      Atuo na criação de ambientes seguros, bem estruturados e ativos, sempre focado na coordenação de staff e suporte.
-    </div>
-    <div class="speech">
-      Minha paixão é transformar servidores em comunidades sólidas, engajadas e com excelente experiência para todos.
-    </div>
+    <div class="speech"><i class="ri-user-star-fill"></i> Sou administrador e construtor de servidores Discord, com experiência em comunidades de 6k a 75k membros.</div>
+    <div class="speech"><i class="ri-team-fill"></i> Atuo na criação de ambientes seguros, bem estruturados e ativos, sempre focado na coordenação de staff e suporte.</div>
+    <div class="speech"><i class="ri-rocket-2-fill"></i> Minha paixão é transformar servidores em comunidades sólidas, engajadas e com excelente experiência para todos.</div>
   </section>
 
   <!-- PAGE 2 -->
@@ -279,8 +300,21 @@
         }
       });
     }, {threshold:0.2});
-
     document.querySelectorAll('section, .card, .contact-box').forEach(el => observer.observe(el));
+
+    // Transição ao clicar no menu
+    const transition = document.getElementById("page-transition");
+    document.querySelectorAll("nav a").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const target = link.getAttribute("href");
+        transition.classList.add("active");
+        setTimeout(()=>{
+          document.querySelector(target).scrollIntoView({behavior:"smooth"});
+          transition.classList.remove("active");
+        },600);
+      });
+    });
   </script>
 </body>
-  </html>
+</html>
