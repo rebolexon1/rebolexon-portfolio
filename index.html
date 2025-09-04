@@ -295,71 +295,14 @@
       </div>
 
       <footer>© <span id="year"></span> Rebolexon — Todos os direitos reservados.</footer>
-    </section>
-  </div>
 
-<script>
-  // Ano do rodapé
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Partículas simples
-  const cv = document.getElementById('stars');
-  const ctx = cv.getContext('2d');
-  let W,H,pts=[];
-  function resize(){
-    W=cv.width=innerWidth; H=cv.height=innerHeight;
-    pts = Array.from({length:120}, ()=>({
-      x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.8+0.6,
-      vx:(Math.random()-.5)*.35, vy:Math.random()*.8+.15,
-      a:Math.random()*.8+.2
-    }));
-  }
-  addEventListener('resize', resize); resize();
-  (function loop(){
-    ctx.clearRect(0,0,W,H);
-    for(const p of pts){
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.y>H) p.y=0, p.x=Math.random()*W;
-      if(p.x>W) p.x=0; if(p.x<0) p.x=W;
-      ctx.fillStyle=`rgba(160,180,255,${p.a})`;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    requestAnimationFrame(loop);
-  })();
-
-  // Navegação com transições
-  const tabs = document.querySelectorAll('.tab');
-  const pages = {
-    home: document.getElementById('home'),
-    work: document.getElementById('work'),
-    contact: document.getElementById('contact')
-  };
-  let current = 'home';
-
-  function show(id){
-    if(id===current) return;
-    tabs.forEach(t=>t.classList.toggle('active', t.dataset.to===id));
-    const out = pages[current];
-    const incoming = pages[id];
-    out.classList.remove('show'); out.classList.add('exit');
-    setTimeout(()=>{ out.classList.remove('exit'); out.style.display='none'; }, 520);
-    incoming.style.display='block';
-    requestAnimationFrame(()=>incoming.classList.add('show'));
-    current = id;
-    // scroll ao topo suave
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.to)));
-
-  // Reveal on scroll
-  const io = new IntersectionObserver((es)=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
-</body>
-            </html>
+      <!-- Contador de visitas -->
+      <div style="text-align:center; margin:40px 0;">
+        <div style="
+          display:inline-block; 
+          padding:22px 30px; 
+          border-radius:20px; 
+          border:1px solid var(--stroke);
+          background: linear-gradient(180deg, #0f1135cc, #0a0c22cc);
+          box-shadow: 0 0 20px rgba(139,92,246
           
