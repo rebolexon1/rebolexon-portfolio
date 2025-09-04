@@ -34,11 +34,11 @@
     backdrop-filter:blur(8px);
     background:rgba(10,12,20,.6);
     border-bottom:1px solid var(--stroke);
-    display:flex;justify-content:center;gap:20px;padding:14px;
+    display:flex;justify-content:center;gap:14px;padding:10px;
   }
   header a{
-    color:var(--txt);text-decoration:none;font-weight:700;
-    padding:8px 14px;border-radius:999px;
+    color:var(--txt);text-decoration:none;font-weight:600;
+    padding:6px 10px;border-radius:999px;font-size:14px;
     transition:.3s;
   }
   header a:hover{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;}
@@ -55,6 +55,24 @@
   .headline{text-align:center;max-width:800px;margin-bottom:40px;}
   .headline h1{font-size:clamp(28px,5vw,56px);margin-bottom:10px;}
   .headline p{color:var(--sub);}
+
+  /* Balão flutuante história */
+  .story{
+    max-width:700px;
+    background:rgba(20,22,50,.9);
+    border:1px solid var(--stroke);
+    border-radius:20px;
+    padding:24px;
+    margin-top:30px;
+    box-shadow:var(--ring);
+    animation:float 4s ease-in-out infinite;
+  }
+  .story p{line-height:1.6;color:var(--txt);}
+
+  @keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+  }
 
   /* Cards das comunidades */
   .grid{
@@ -87,23 +105,36 @@
   }
   .btn.join{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;}
   .btn.join:hover{transform:translateY(-2px);}
-  .btn.ghost{border:1px solid var(--stroke);color:var(--txt);}
-  .btn.ghost:hover{background:rgba(255,255,255,.05);}
-  .btns{display:flex;gap:10px;flex-wrap:wrap;}
-  
-  /* Balão flutuante no contato */
+
+  /* Contato */
   .balloon{
-    margin-top:40px;
+    margin-top:20px;
     padding:18px 28px;
     border-radius:20px;
     background:linear-gradient(90deg,var(--accent),var(--accent2));
     color:#000;font-weight:700;
     animation:float 4s ease-in-out infinite;
+    box-shadow:0 0 24px rgba(139,92,246,.5);
   }
-  @keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
+
+  .contact-btns{
+    display:flex;gap:20px;flex-wrap:wrap;
+    justify-content:center;margin-top:30px;
   }
+  .contact-btns a{
+    display:flex;align-items:center;gap:8px;
+    padding:16px 24px;
+    border-radius:16px;
+    font-weight:700;
+    text-decoration:none;
+    font-size:16px;
+    box-shadow:0 6px 16px rgba(0,0,0,.3);
+    transition:.3s;
+  }
+  .contact-btns a.discord{background:#5865F2;color:#fff;}
+  .contact-btns a.discord:hover{transform:translateY(-4px);box-shadow:0 0 24px #5865f2aa;}
+  .contact-btns a.email{background:#ff4d4d;color:#fff;}
+  .contact-btns a.email:hover{transform:translateY(-4px);box-shadow:0 0 24px #ff4d4daa;}
 </style>
 </head>
 <body>
@@ -121,6 +152,12 @@
     <h1>Rebolexon</h1>
     <p>Administrador de comunidade e builder de servidores focado em <strong>segurança</strong>, <strong>processos claros</strong> e <strong>experiências engajadoras</strong>. Atuação em comunidades entre <strong>6k</strong> e <strong>75k</strong> membros, coordenando times, regras e rotinas operacionais.</p>
   </div>
+
+  <div class="story">
+    <p>💬 Minha jornada no Discord começou há mais de <strong>3 anos</strong>, onde atuei em comunidades de diferentes tamanhos.  
+    Tenho experiência com <strong>administração</strong>, <strong>suporte na moderação</strong> e principalmente no <strong>engajamento</strong> — deixando as comunidades mais vivas, unidas e organizadas.  
+    Meu foco sempre foi criar espaços <strong>seguros</strong> e <strong>acolhedores</strong>, dando suporte aos times e garantindo que todos se sintam parte do projeto.</p>
+  </div>
 </section>
 
 <!-- Seção 2 -->
@@ -129,7 +166,6 @@
     <h1>Comunidades</h1>
     <p>Servidores em que atuei:</p>
   </div>
-
   <div class="grid">
     <!-- Ocean -->
     <div class="card">
@@ -137,9 +173,7 @@
       <div class="pad">
         <h3>The Ocean</h3>
         <p>Coordenador geral: políticas de segurança, estrutura e integração da equipe.</p>
-        <div class="btns">
-          <a class="btn join" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank"><i class="ri-login-box-line"></i> Join</a>
-        </div>
+        <a class="btn join" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank"><i class="ri-login-box-line"></i> Join</a>
       </div>
     </div>
     <!-- PlaggVerse -->
@@ -148,9 +182,7 @@
       <div class="pad">
         <h3>PlaggVerse</h3>
         <p>Community Moderator / Suporte.</p>
-        <div class="btns">
-          <a class="btn join" href="https://discord.gg/plaggxzin" target="_blank"><i class="ri-login-box-line"></i> Join</a>
-        </div>
+        <a class="btn join" href="https://discord.gg/plaggxzin" target="_blank"><i class="ri-login-box-line"></i> Join</a>
       </div>
     </div>
     <!-- MDL -->
@@ -159,9 +191,7 @@
       <div class="pad">
         <h3>MDL</h3>
         <p>Community Moderator / Suporte.</p>
-        <div class="btns">
-          <a class="btn join" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank"><i class="ri-login-box-line"></i> Join</a>
-        </div>
+        <a class="btn join" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank"><i class="ri-login-box-line"></i> Join</a>
       </div>
     </div>
     <!-- Vampzin -->
@@ -170,9 +200,7 @@
       <div class="pad">
         <h3>Vampzin Community</h3>
         <p>Community Manager: gestão da equipe, calendário de ações e melhorias.</p>
-        <div class="btns">
-          <a class="btn join" href="https://discord.gg/6uRgP7fg" target="_blank"><i class="ri-login-box-line"></i> Join</a>
-        </div>
+        <a class="btn join" href="https://discord.gg/6uRgP7fg" target="_blank"><i class="ri-login-box-line"></i> Join</a>
       </div>
     </div>
   </div>
@@ -184,7 +212,11 @@
     <h1>Vamos conversar</h1>
     <p>Aberto a oportunidades de moderação, coordenação e estrutura de servidores.</p>
   </div>
-  <div class="balloon">💬 Fale comigo no Discord ou Email!</div>
+  <div class="balloon">📩 Me chama no Discord ou Email, vou responder rapidinho!</div>
+  <div class="contact-btns">
+    <a href="https://discord.com/users/SEU_ID" class="discord" target="_blank"><i class="ri-discord-fill ri-xl"></i> Discord</a>
+    <a href="mailto:rebolexonxon@gmail.com" class="email"><i class="ri-mail-line ri-xl"></i> Email</a>
+  </div>
 </section>
 
 <script>
