@@ -1,364 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Portfólio — Rebolexon</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-
-<style>
-  :root{
-    --bg1:#090a10;
-    --bg2:#11132a;
-    --card:#0e1030cc;
-    --stroke:#24284d;
-    --txt:#e9e9ff;
-    --sub:#aeb3ff;
-    --accent:#8b5cf6;
-    --accent2:#06b6d4;
-    --ring: 0 0 24px rgba(139,92,246,.35), 0 0 60px rgba(6,182,212,.25);
-    --r:20px;
-    --shadow: 0 12px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
-    --speed:.55s;
-  }
-
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--txt); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    background:
-      radial-gradient(1200px 800px at 80% -10%, rgba(139,92,246,.22), transparent 60%),
-      radial-gradient(900px 700px at -10% 110%, rgba(6,182,212,.18), transparent 60%),
-      linear-gradient(180deg, var(--bg2), var(--bg1));
-    overflow-x:hidden;
-  }
-
-  /* Partículas */
-  canvas#stars{position:fixed; inset:0; z-index:-1; filter:blur(.25px) saturate(115%);}
-
-  /* Layout e navegação */
-  .wrap{width:min(1200px,92%); margin-inline:auto; padding:22px 0 80px;}
-  .nav{
-    position:sticky; top:14px; z-index:20;
-    display:flex; gap:10px; align-items:center; justify-content:center;
-    backdrop-filter: blur(10px);
-    background:linear-gradient(180deg,#101233aa,#0a0b18aa);
-    border:1px solid var(--stroke); border-radius:999px; padding:10px;
-    box-shadow:var(--ring);
-  }
-  .tab{
-    appearance:none; border:1px solid var(--stroke); background:#0e1030;
-    color:var(--txt); padding:10px 16px; border-radius:999px;
-    font-weight:700; font-size:14px; letter-spacing:.2px;
-    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-    transition:.25s transform;
-  }
-  .tab:hover{transform:translateY(-1px)}
-  .tab.active{
-    border-color:transparent; color:#0b0c16;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    box-shadow:var(--ring);
-  }
-
-  /* Páginas (SPA) */
-  .page{
-    min-height:calc(100dvh - 120px);
-    display:none; opacity:0; transform:translateY(20px) scale(.985);
-  }
-  .page.show{
-    display:block; animation:enter var(--speed) cubic-bezier(.22,1,.36,1) forwards;
-  }
-  .page.exit{animation:exit var(--speed) cubic-bezier(.55,.01,.22,1) forwards;}
-  @keyframes enter{to{opacity:1; transform:translateY(0) scale(1)}}
-  @keyframes exit{to{opacity:0; transform:translateY(-16px) scale(.992)}}
-
-  /* Cartões e chips */
-  .card{
-    border:1px solid var(--stroke); border-radius:var(--r); overflow:hidden;
-    background:linear-gradient(180deg,#0f1135cc,#0a0c22cc); box-shadow:var(--shadow),var(--ring);
-    transition:.35s transform, .35s border-color, .35s box-shadow;
-  }
-  .card:hover{transform:translateY(-6px); border-color:#3a3d74; box-shadow:0 18px 60px rgba(0,0,0,.55), var(--ring);}
-  .pad{padding:20px}
-
-  .headline{
-    display:grid; grid-template-columns:1fr; gap:14px; text-align:center; margin-top:28px;
-  }
-  .headline h1{margin:0; font-size:clamp(28px,5.4vw,56px); letter-spacing:.4px}
-  .headline p{margin:0 auto; color:var(--sub); max-width:900px; font-size:clamp(14px,1.8vw,18px)}
-
-  .badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:8px;}
-  .chip{
-    display:inline-flex; align-items:center; gap:8px; padding:10px 12px;
-    border:1px solid var(--stroke); border-radius:999px; font-size:14px; color:#c8ccff;
-    background:linear-gradient(180deg,#0f1135,#0a0c22);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-  }
-  .chip i{font-size:18px}
-
-  /* Grid de comunidades */
-  .grid{
-    display:grid; gap:22px;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    margin:26px 0 40px;
-  }
-  .thumb{width:100%; height:210px; object-fit:cover; display:block}
-  .title{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .title h3{margin:0; font-size:20px}
-  .tag{font-size:12px; font-weight:800; padding:6px 10px; border-radius:999px;
-       background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0a0c16}
-  .desc{color:#cfd2ff; font-size:15px; margin:10px 0 14px; line-height:1.5}
-  .btns{display:flex; gap:10px; align-items:center}
-  .btn{
-    flex:1; text-align:center; padding:12px 14px; border-radius:14px;
-    text-decoration:none; color:var(--txt); border:1px solid var(--stroke); font-weight:700;
-    display:inline-flex; justify-content:center; align-items:center; gap:8px; transition:.25s transform;
-  }
-  .btn:hover{transform:translateY(-2px)}
-  .primary{border:none; color:#0b0c16; background:linear-gradient(90deg,var(--accent),var(--accent2))}
-  .ghost{background:linear-gradient(180deg,#0f1135,#0a0c22)}
-
-  /* Contato */
-  .contact-wrap{max-width:850px; margin:22px auto 0; display:grid; gap:18px}
-  .call{
-    display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center;
-    border:1px dashed #3b3f73; border-radius:18px; padding:16px 18px; background:#0e1036aa;
-    animation:float 6s ease-in-out infinite;
-  }
-  .call i{font-size:28px}
-  .call strong{font-size:18px}
-  .call p{margin:0; color:#cfd2ff}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
-  .cta-contacts{
-    display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
-  }
-
-  footer{text-align:center; color:#aab0ff88; margin:34px 0 0}
-
-  /* Apresentação “falas” em cartões com ícone */
-  .talks{display:grid; gap:14px; max-width:980px; margin:28px auto 0}
-  .talk{
-    display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:start;
-    padding:14px 16px; border:1px solid var(--stroke); border-radius:16px; background:#0e1036aa;
-    animation:pop .6s cubic-bezier(.22,1,.36,1) both;
-  }
-  .talk i{font-size:22px; margin-top:2px}
-  .talk h4{margin:0 0 4px 0}
-  .talk p{margin:0; color:#cfd2ff}
-  @keyframes pop{from{opacity:0; transform:translateY(10px) scale(.98)}}
-
-  /* Reveal on scroll */
-  .reveal{opacity:0; transform:translateY(16px) scale(.98); transition:.6s cubic-bezier(.22,1,.36,1)}
-  .reveal.in{opacity:1; transform:translateY(0) scale(1)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Comunidade</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <header class="hidden">
+    <h1>Bem-vindo à Comunidade 🚀</h1>
+    <p>Um espaço para trocar ideias, aprender e crescer junto</p>
+  </header>
 
-  <div class="wrap">
-    <!-- Navegação -->
-    <nav class="nav">
-      <button class="tab active" data-to="home"><i class="ri-user-star-line"></i> Apresentação</button>
-      <button class="tab" data-to="work"><i class="ri-community-line"></i> Comunidades</button>
-      <button class="tab" data-to="contact"><i class="ri-send-plane-2-line"></i> Contato</button>
-    </nav>
-
-    <!-- Página 1: Apresentação -->
-    <section id="home" class="page show">
-      <div class="headline reveal">
-        <h1>Rebolexon</h1>
-        <p>Administrador de comunidade e builder de servidores focado em <strong>segurança</strong>, <strong>processos claros</strong> e <strong>experiências engajadoras</strong>. Atuação em comunidades entre <strong>6k</strong> e <strong>75k</strong> membros, coordenando times, regras e rotinas operacionais.</p>
-        <div class="badges">
-          <span class="chip"><i class="ri-shield-star-line"></i> Safety First</span>
-          <span class="chip"><i class="ri-team-line"></i> Coordenação de Staff</span>
-          <span class="chip"><i class="ri-rocket-line"></i> Crescimento Saudável</span>
-          <span class="chip"><i class="ri-tools-line"></i> Estrutura & Automação</span>
-        </div>
+  <main>
+    <section class="hidden">
+      <h2><i class="fas fa-users"></i> Servidores</h2>
+      <div class="server-card">
+        <img src="plaggverse.png" alt="Servidor 1">
+        <p>Servidor Plaggverse</p>
+        <a class="btn" href="https://discord.gg/seulink" target="_blank">Entrar</a>
       </div>
-
-      <!-- Falas com ícones -->
-      <div class="talks">
-        <div class="talk reveal">
-          <i class="ri-shield-check-line"></i>
-          <div>
-            <h4>Políticas de Segurança</h4>
-            <p>Definição de regras, anti-raid, triagem de permissões e boas práticas de moderação para proteger membros e equipe.</p>
-          </div>
-        </div>
-        <div class="talk reveal" style="animation-delay:.05s">
-          <i class="ri-calendar-check-line"></i>
-          <div>
-            <h4>Rotina Operacional</h4>
-            <p>Criação de playbooks de atendimento e escalonamento, revisão de tickets e alinhamento com liderança.</p>
-          </div>
-        </div>
-        <div class="talk reveal" style="animation-delay:.1s">
-          <i class="ri-layout-grid-line"></i>
-          <div>
-            <h4>Arquitetura de Servidor</h4>
-            <p>Organização de canais, roles, painéis informativos e integrações de bot para onboarding limpo e eficaz.</p>
-          </div>
-        </div>
+      <div class="server-card">
+        <img src="theocean.png" alt="Servidor 2">
+        <p>Servidor The Ocean</p>
+        <a class="btn" href="https://discord.gg/seulink" target="_blank">Entrar</a>
+      </div>
+      <div class="server-card">
+        <img src="vampzin.png" alt="Servidor 3">
+        <p>Servidor Vampzin</p>
+        <a class="btn" href="https://discord.gg/seulink" target="_blank">Entrar</a>
       </div>
     </section>
 
-    <!-- Página 2: Comunidades -->
-    <section id="work" class="page">
-      <div class="headline reveal">
-        <h1>Comunidades</h1>
-        <p>Alguns servidores em que atuo/atuava na moderação e administração.</p>
-      </div>
-
-      <div class="grid">
-        <!-- The Ocean -->
-        <article class="card reveal">
-          <img class="thumb" src="theocean.png" alt="The Ocean">
-          <div class="pad">
-            <div class="title"><h3>The Ocean</h3><span class="tag">53k+</span></div>
-            <p class="desc">Coordenador geral: políticas de segurança, estrutura de canais, eventos e integração da equipe de moderação.</p>
-            <div class="btns">
-              <a class="btn primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
-              <span class="btn ghost"><i class="ri-shield-keyhole-line"></i> Safe-Ops</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- PlaggVerse -->
-        <article class="card reveal" style="animation-delay:.05s">
-          <img class="thumb" src="plaggverse.png" alt="PlaggVerse">
-          <div class="pad">
-            <div class="title"><h3>PlaggVerse</h3><span class="tag">48k+</span></div>
-            <p class="desc">Community Moderator / Suporte.</p>
-            <div class="btns">
-              <a class="btn primary" href="https://discord.gg/plaggxzin" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
-              <span class="btn ghost"><i class="ri-customer-service-2-line"></i> Support</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- MDL -->
-        <article class="card reveal" style="animation-delay:.1s">
-          <img class="thumb" src="mdl.png" alt="MDL">
-          <div class="pad">
-            <div class="title"><h3>MDL</h3><span class="tag">75k+</span></div>
-            <p class="desc">Community Moderator / Suporte.</p>
-            <div class="btns">
-              <a class="btn primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
-              <span class="btn ghost"><i class="ri-customer-service-2-line"></i> Support</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Vampzin -->
-        <article class="card reveal" style="animation-delay:.15s">
-          <img class="thumb" src="vampzin.png" alt="Vampzin Community">
-          <div class="pad">
-            <div class="title"><h3>Vampzin Community</h3><span class="tag">6k+</span></div>
-            <p class="desc">Community Manager: gestão de equipe, calendário de ações e melhoria contínua da experiência dos membros.</p>
-            <div class="btns">
-              <a class="btn primary" href="https://discord.gg/6uRgP7fg" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
-              <span class="btn ghost"><i class="ri-group-line"></i> Team Ops</span>
-            </div>
-          </div>
-        </article>
-      </div>
+    <section class="hidden">
+      <h2><i class="fas fa-comments"></i> Sobre a Comunidade</h2>
+      <p>Aqui a gente compartilha ideias, faz amigos e aprende junto.</p>
     </section>
 
-    <!-- Página 3: Contato -->
-    <section id="contact" class="page">
-      <div class="headline reveal">
-        <h1>Vamos conversar</h1>
-        <p>Aberto a oportunidades de moderação, coordenação e estrutura de servidores. Respondo rápido no Discord.</p>
-      </div>
-
-      <div class="contact-wrap">
-        <div class="call reveal">
-          <i class="ri-message-3-line"></i>
-          <div>
-            <strong>Precisa de segurança, processos e uma comunidade saudável?</strong>
-            <p>Falo sobre governança, anti-raid, fluxos de suporte, onboarding e organização de canais.</p>
-          </div>
-        </div>
-
-        <div class="card pad reveal" style="text-align:center">
-          <h3 style="margin-top:0">Entre em contato</h3>
-          <p style="color:#cfd2ff; margin-top:6px">Escolha uma opção abaixo:</p>
-          <div class="cta-contacts" style="margin-top:12px">
-            <a class="btn primary" href="https://discord.com/users/SEU_ID" target="_blank" rel="noopener"><i class="ri-discord-fill"></i> Discord</a>
-            <a class="btn ghost" href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-line"></i> Email</a>
-            <a class="btn ghost" href="https://github.com/rebolexon1" target="_blank" rel="noopener"><i class="ri-github-fill"></i> GitHub</a>
-          </div>
-        </div>
-      </div>
-
-      <footer>© <span id="year"></span> Rebolexon — Todos os direitos reservados.</footer>
+    <section class="hidden">
+      <h2><i class="fas fa-envelope"></i> Contato</h2>
+      <p>Quer falar com a gente? Entre em contato 👇</p>
+      <a class="btn" href="mailto:seuemail@gmail.com">Email</a>
+      <a class="btn" href="https://discord.gg/seulink" target="_blank">Discord</a>
     </section>
-  </div>
+  </main>
 
-<script>
-  // Ano do rodapé
-  document.getElementById('year').textContent = new Date().getFullYear();
+  <footer>
+    <p>© 2025 Minha Comunidade</p>
+  </footer>
 
-  // Partículas simples
-  const cv = document.getElementById('stars');
-  const ctx = cv.getContext('2d');
-  let W,H,pts=[];
-  function resize(){
-    W=cv.width=innerWidth; H=cv.height=innerHeight;
-    pts = Array.from({length:120}, ()=>({
-      x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.8+0.6,
-      vx:(Math.random()-.5)*.35, vy:Math.random()*.8+.15,
-      a:Math.random()*.8+.2
-    }));
-  }
-  addEventListener('resize', resize); resize();
-  (function loop(){
-    ctx.clearRect(0,0,W,H);
-    for(const p of pts){
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.y>H) p.y=0, p.x=Math.random()*W;
-      if(p.x>W) p.x=0; if(p.x<0) p.x=W;
-      ctx.fillStyle=`rgba(160,180,255,${p.a})`;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    requestAnimationFrame(loop);
-  })();
-
-  // Navegação com transições
-  const tabs = document.querySelectorAll('.tab');
-  const pages = {
-    home: document.getElementById('home'),
-    work: document.getElementById('work'),
-    contact: document.getElementById('contact')
-  };
-  let current = 'home';
-
-  function show(id){
-    if(id===current) return;
-    tabs.forEach(t=>t.classList.toggle('active', t.dataset.to===id));
-    const out = pages[current];
-    const incoming = pages[id];
-    out.classList.remove('show'); out.classList.add('exit');
-    setTimeout(()=>{ out.classList.remove('exit'); out.style.display='none'; }, 520);
-    incoming.style.display='block';
-    requestAnimationFrame(()=>incoming.classList.add('show'));
-    current = id;
-    // scroll ao topo suave
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.to)));
-
-  // Reveal on scroll
-  const io = new IntersectionObserver((es)=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+  <script src="script.js"></script>
 </body>
-          </html>
+</html>
