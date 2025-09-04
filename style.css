@@ -1,0 +1,60 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fundo com partículas escuras */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Seções */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+/* Títulos com animação */
+h1, h2, h3 {
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Botões */
+button, .btn {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover, .btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
+}
