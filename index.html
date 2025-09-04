@@ -1,230 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfólio Rebolexon</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-
   <style>
     :root {
-      --bg1: #0b0b11;
+      --bg1: #0a0a14;
       --bg2: #121225;
-      --stroke: #232444;
-      --txt: #e7e7ff;
-      --sub: #aab0ff;
       --accent: #8b5cf6;
       --accent2: #06b6d4;
-      --glow: 0 0 20px rgba(139,92,246,.45), 0 0 40px rgba(6,182,212,.28);
-      --radius: 18px;
+      --txt: #e7e7ff;
+      --sub: #aab0ff;
     }
-    *{box-sizing:border-box; margin:0; padding:0}
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Inter', sans-serif;
       color: var(--txt);
-      background: radial-gradient(1000px 800px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
-                  radial-gradient(900px 700px at -10% 110%, rgba(6,182,212,.20), transparent 60%),
-                  linear-gradient(180deg, var(--bg2), var(--bg1));
-      overflow-x: hidden;
+      background: linear-gradient(180deg,var(--bg1),var(--bg2));
+      overflow-x:hidden;
+      scroll-behavior:smooth;
     }
-    canvas#fx { position: fixed; inset: 0; z-index: -1; filter: blur(.3px) saturate(120%); }
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+    h1,h2 { margin-bottom: 20px; }
+    p { max-width: 800px; margin: auto; line-height: 1.6; color: var(--sub); }
 
-    .wrap { width: min(1200px, 92%); margin: auto; }
-
-    /* HEADER */
-    header {
-      margin-top: 20px;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, #0f1022aa, #0b0b11aa);
-      border: 1px solid var(--stroke);
+    /* NAV */
+    nav {
+      position: fixed; top:20px; left:50%; transform:translateX(-50%);
+      background: rgba(10,10,20,.8);
+      border:1px solid #222;
       border-radius: 999px;
-      padding: 12px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: var(--glow);
-      animation: fadeIn 1s ease-out;
+      padding: 10px 20px;
+      display:flex; gap:20px;
+      z-index:1000;
+      backdrop-filter: blur(10px);
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand .dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--accent), var(--accent2));
-      animation: pulse 2s infinite;
-      box-shadow: 0 0 15px var(--accent);
+    nav a {
+      color: var(--txt);
+      text-decoration:none;
+      font-weight:600;
+      transition:.3s;
     }
-    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
-    .brand h1 { font-size: 18px; font-weight: 800; }
-    .brand span { font-size: 12px; color: var(--sub); }
-    .actions a {
-      text-decoration: none; color: var(--txt); font-weight: 600; font-size: 14px;
-      padding: 10px 16px; border: 1px solid var(--stroke); border-radius: 12px;
-      display: inline-flex; align-items: center; gap: 6px;
-      transition: .3s;
-    }
-    .actions a:hover { transform: translateY(-2px); background: #1b1d3a; }
-    .cta { background: linear-gradient(90deg, var(--accent), var(--accent2)); border: none; color: #0c0c14 !important; }
+    nav a:hover { color: var(--accent2); }
 
-    /* HERO */
-    .hero {
-      text-align: center; padding: 80px 20px 50px;
-      animation: fadeInUp 1.2s ease-out;
+    /* SERVERS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 24px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 1000px;
     }
-    .hero h2 { font-size: clamp(30px, 6vw, 60px); margin-bottom: 12px; }
-    .hero p { color: var(--sub); max-width: 800px; margin: auto; font-size: 18px; }
-    .badges {
-      margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    }
-    .badge {
-      border: 1px solid var(--stroke); border-radius: 999px;
-      padding: 10px 14px; font-size: 14px; color: #bfc3ff;
-      display: flex; align-items: center; gap: 6px;
-      transition: .3s;
-    }
-    .badge:hover { background: #181a33; transform: scale(1.05); }
-
-    /* GRID DE CARDS */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 24px; margin-bottom: 60px; }
     .card {
-      border-radius: var(--radius); border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, #0f1023cc, #0a0b18cc);
-      box-shadow: var(--glow); overflow: hidden;
-      transition: .4s; animation: fadeInUp 1s ease;
+      background: rgba(20,20,40,.7);
+      border:1px solid #333;
+      border-radius:18px;
+      padding:20px;
+      transition:.4s;
+      animation: slideUp 1s ease;
     }
-    .card:hover { transform: translateY(-8px) scale(1.02); border-color: #3a3d74; box-shadow: 0 0 25px rgba(139,92,246,.5); }
-    .thumb { width: 100%; height: 160px; object-fit: cover; }
-    .content { padding: 18px; }
-    .title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .title h3 { margin: 0; font-size: 20px; }
-    .tag {
-      font-size: 12px; padding: 6px 10px; border-radius: 999px;
-      background: linear-gradient(90deg,var(--accent),var(--accent2));
-      color: #0b0b14; font-weight: 800;
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(139,92,246,.4);
     }
-    .desc { color: #c9ccff; font-size: 15px; margin: 12px 0; line-height: 1.4; }
-    .work-icons { display: flex; gap: 10px; margin-bottom: 12px; }
-    .work-icons i { font-size: 20px; color: var(--accent2); transition: .3s; }
-    .work-icons i:hover { color: var(--accent); transform: scale(1.2); }
-    .buttons { display: flex; gap: 10px; }
-    .btn {
-      flex: 1; text-align: center; padding: 10px;
-      border-radius: 12px; text-decoration: none;
-      color: var(--txt); border: 1px solid var(--stroke);
-      transition: .3s;
+    .card img {
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:15px;
     }
-    .btn.primary {
-      background: linear-gradient(90deg,var(--accent),var(--accent2));
-      color: #0b0b14; border: none;
-    }
-    .btn:hover { transform: scale(1.05); }
+    .card h3 { margin-bottom:10px; }
 
-    footer { text-align: center; padding: 30px 0; color: #a8acff88; }
+    /* CONTACT */
+    .contact-icons {
+      display:flex; gap:20px; margin-top:30px;
+    }
+    .contact-icons a {
+      font-size:40px;
+      color: var(--txt);
+      transition:.3s;
+    }
+    .contact-icons a:hover {
+      color: var(--accent2);
+      transform:scale(1.2);
+    }
 
-    @keyframes fadeIn { from {opacity:0} to {opacity:1} }
-    @keyframes fadeInUp { from {opacity:0; transform:translateY(30px)} to {opacity:1; transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes slideUp { from{opacity:0; transform:translateY(50px)} to{opacity:1; transform:translateY(0)} }
   </style>
 </head>
 <body>
-  <canvas id="fx"></canvas>
 
-  <div class="wrap">
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <span class="dot"></span>
-        <div>
-          <h1>Rebolexon</h1>
-          <span>Community Administrator • Server Builder</span>
-        </div>
+  <!-- NAV -->
+  <nav>
+    <a href="#apresentacao">Apresentação</a>
+    <a href="#servidores">Servidores</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <!-- PAGE 1 -->
+  <section id="apresentacao">
+    <h1>👋 Olá, eu sou o Rebolexon</h1>
+    <p>
+      Sou administrador e construtor de servidores Discord, com experiência em comunidades de 6k a 75k membros. 
+      Atuo na criação de ambientes seguros, bem estruturados e ativos, sempre focado na coordenação de staff, 
+      suporte aos membros e organização de eventos. <br><br>
+      Minha paixão é transformar servidores em comunidades sólidas, engajadas e com excelente experiência para todos os participantes.
+    </p>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section id="servidores">
+    <h2>🌐 Servidores em que trabalhei</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="theocean.png" alt="The Ocean">
+        <h3>The Ocean (53k+)</h3>
+        <p>Coordenador geral: segurança, estrutura de canais, eventos e equipe de moderação.</p>
       </div>
-      <div class="actions">
-        <a class="cta" href="https://discord.com/users/SEU_ID" target="_blank"><i class="ri-discord-fill"></i> Contact</a>
-        <a href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-line"></i> Email</a>
-        <a href="https://github.com/rebolexon1" target="_blank"><i class="ri-github-fill"></i> GitHub</a>
+      <div class="card">
+        <img src="plaggverse.png" alt="PlaggVerse">
+        <h3>PlaggVerse (48k+)</h3>
+        <p>Community Moderator: parte da equipe de suporte da comunidade.</p>
       </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-      <h2>Safe & Engaging Communities</h2>
-      <p>Experiência em gerenciamento de servidores entre 6k e 75k membros. Coordenação de equipes, administração de comunidades e criação de ambientes seguros e ativos.</p>
-      <div class="badges">
-        <span class="badge"><i class="ri-shield-star-line"></i> Segurança</span>
-        <span class="badge"><i class="ri-team-line"></i> Coordenação de Staff</span>
-        <span class="badge"><i class="ri-rocket-line"></i> Crescimento</span>
-        <span class="badge"><i class="ri-customer-service-2-line"></i> Suporte</span>
-        <span class="badge"><i class="ri-community-line"></i> Gestão de Comunidade</span>
+      <div class="card">
+        <img src="mdl.png" alt="MDL">
+        <h3>MDL (75k+)</h3>
+        <p>Community Moderator: parte da equipe de suporte global e revisão de regras.</p>
       </div>
-    </section>
+      <div class="card">
+        <img src="vampzin.png" alt="Vampzin">
+        <h3>Vampzin Community (6k+)</h3>
+        <p>Community Manager: gestão de equipe e melhoria contínua da experiência dos membros.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- SERVIDORES -->
-    <section class="grid">
-      <article class="card">
-        <img class="thumb" src="theocean.png" alt="The Ocean">
-        <div class="content">
-          <div class="title"><h3>The Ocean</h3><span class="tag">53k+</span></div>
-          <div class="work-icons"><i class="ri-shield-star-line"></i><i class="ri-team-line"></i><i class="ri-settings-5-line"></i></div>
-          <p class="desc">Coordenador geral: políticas de segurança, estrutura de canais, eventos e integração da equipe de moderação.</p>
-          <div class="buttons"><a class="btn primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Join</a></div>
-        </div>
-      </article>
+  <!-- PAGE 3 -->
+  <section id="contato">
+    <h2>📬 Entre em contato</h2>
+    <p>Se quiser conversar comigo, você pode me encontrar diretamente pelo Discord ou Email.</p>
+    <div class="contact-icons">
+      <a href="https://discord.com/users/SEU_ID" target="_blank"><i class="ri-discord-fill"></i></a>
+      <a href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-fill"></i></a>
+    </div>
+  </section>
 
-      <article class="card">
-        <img class="thumb" src="plaggverse.png" alt="PlaggVerse">
-        <div class="content">
-          <div class="title"><h3>PlaggVerse</h3><span class="tag">48k+</span></div>
-          <div class="work-icons"><i class="ri-customer-service-2-line"></i><i class="ri-user-settings-line"></i></div>
-          <p class="desc">Community Moderator: parte da equipe de suporte da comunidade.</p>
-          <div class="buttons"><a class="btn primary" href="https://discord.gg/plaggxzin" target="_blank">Join</a></div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="thumb" src="mdl.png" alt="MDL">
-        <div class="content">
-          <div class="title"><h3>MDL</h3><span class="tag">75k+</span></div>
-          <div class="work-icons"><i class="ri-customer-service-2-line"></i><i class="ri-shield-keyhole-line"></i></div>
-          <p class="desc">Community Moderator: parte da equipe de suporte global e revisão de regras.</p>
-          <div class="buttons"><a class="btn primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Join</a></div>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="thumb" src="vampzin.png" alt="Vampzin Community">
-        <div class="content">
-          <div class="title"><h3>Vampzin Community</h3><span class="tag">6k+</span></div>
-          <div class="work-icons"><i class="ri-community-line"></i><i class="ri-user-star-line"></i></div>
-          <p class="desc">Community Manager: gestão de equipe, calendário de ações e melhoria contínua da experiência dos membros.</p>
-          <div class="buttons"><a class="btn primary" href="https://discord.gg/6uRgP7fg" target="_blank">Join</a></div>
-        </div>
-      </article>
-    </section>
-
-    <footer>
-      © <span id="year"></span> Rebolexon — Todos os direitos reservados.
-    </footer>
-  </div>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Fundo de partículas animadas
-    const c = document.getElementById('fx'), ctx = c.getContext('2d');
-    let w,h,px;
-    function resize(){
-      w=c.width=innerWidth; h=c.height=innerHeight;
-      px=Array.from({length:120},()=>({x:Math.random()*w,y:Math.random()*h,vx:Math.random()-.5,vy:Math.random()*.7+0.2}));
-    }
-    addEventListener('resize',resize); resize();
-    function tick(){
-      ctx.clearRect(0,0,w,h);
-      for(const p of px){
-        p.x+=p.vx; p.y+=p.vy; if(p.y>h) p.y=0;
-        ctx.fillStyle="rgba(139,92,246,0.3)";
-        ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
-      }
-      requestAnimationFrame(tick);
-    }
-    tick();
-  </script>
 </body>
-  </html>
+        </html>
