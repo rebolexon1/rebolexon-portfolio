@@ -9,11 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
   <style>
-    /* ====== VARIÁVEIS ====== */
     :root{
       --bg1:#0b0b11;
       --bg2:#121225;
-      --card:#0f1022cc;
       --stroke:#232444;
       --txt:#e7e7ff;
       --sub:#aab0ff;
@@ -21,9 +19,7 @@
       --accent2:#06b6d4;
       --glow: 0 0 24px rgba(139,92,246,.45), 0 0 64px rgba(6,182,212,.28);
       --radius: 18px;
-      --speed: .35s;
     }
-    *{box-sizing:border-box}
     body{
       margin:0; font-family:Inter, sans-serif; color:var(--txt);
       background: radial-gradient(1200px 800px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
@@ -34,7 +30,6 @@
     canvas#fx{position:fixed; inset:0; z-index:-1; filter: blur(.3px) saturate(120%);}
     .wrap{width:min(1150px, 92%); margin-inline:auto;}
     
-    /* ====== HEADER ====== */
     header{
       position:sticky; top:12px; z-index:10;
       backdrop-filter: blur(10px);
@@ -48,7 +43,6 @@
     .brand{display:flex; align-items:center; gap:12px;}
     .brand .dot{width:12px; height:12px; border-radius:50%;
       background: conic-gradient(from 0deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 14px rgba(139,92,246,.6);
       animation: pulse 2.5s infinite;
     }
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
@@ -64,14 +58,12 @@
     .cta{background: linear-gradient(90deg, var(--accent), var(--accent2));
       border:none; color:#0c0c14 !important; box-shadow: var(--glow);}
     
-    /* ====== HERO ====== */
     .hero{text-align:center; padding:60px 0 30px;}
     .hero h2{font-size:clamp(28px, 5vw, 48px); margin:0 0 10px;}
     .hero p{color:var(--sub); max-width:700px; margin:0 auto 22px;}
     .badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
     .badge{border:1px solid var(--stroke); border-radius:999px; padding:8px 12px; font-size:13px; color:#bfc3ff;}
     
-    /* ====== CARDS ====== */
     .grid{display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin:20px 0 60px;}
     .card{border-radius:var(--radius); border:1px solid var(--stroke); overflow:hidden;
       background: linear-gradient(180deg, #0f1023cc, #0a0b18cc); box-shadow: var(--glow); transition:.3s;}
@@ -93,7 +85,6 @@
   <canvas id="fx"></canvas>
 
   <div class="wrap">
-    <!-- Header -->
     <header>
       <div class="brand">
         <span class="dot"></span>
@@ -109,7 +100,6 @@
       </div>
     </header>
 
-    <!-- Hero -->
     <section class="hero">
       <h2>Safe & Engaging Communities</h2>
       <p>Experiência em gerenciamento de servidores entre 6k e 75k membros. Atuação com coordenação de equipes, administração de comunidades e criação de ambientes seguros e engajadores.</p>
@@ -120,13 +110,12 @@
       </div>
     </section>
 
-    <!-- Projetos -->
     <section class="grid">
       <article class="card">
         <img class="thumb" src="theocean.png" alt="The Ocean">
         <div class="content">
           <div class="title"><h3>The Ocean</h3><span class="tag">53k+</span></div>
-          <p class="desc">Coordenação geral e políticas de segurança. Estrutura de canais, eventos e integração da equipe de moderação.</p>
+          <p class="desc">Coordenador geral: políticas de segurança, estrutura de canais, eventos e integração da equipe de moderação.</p>
           <div class="buttons">
             <a class="btn primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Join</a>
           </div>
@@ -137,7 +126,7 @@
         <img class="thumb" src="plaggverse.png" alt="PlaggVerse">
         <div class="content">
           <div class="title"><h3>PlaggVerse</h3><span class="tag">48k+</span></div>
-          <p class="desc">Community Moderator: métricas de engajamento e criação de rotas de suporte para comunidade.</p>
+          <p class="desc">Community Moderator: parte da equipe de suporte e responsável por engajamento da comunidade.</p>
           <div class="buttons">
             <a class="btn primary" href="https://discord.gg/plaggxzin" target="_blank">Join</a>
           </div>
@@ -148,7 +137,7 @@
         <img class="thumb" src="mdl.png" alt="MDL">
         <div class="content">
           <div class="title"><h3>MDL</h3><span class="tag">75k+</span></div>
-          <p class="desc">Moderação global, revisão de regras e implantação de sistema de tickets e anti-raid.</p>
+          <p class="desc">Community Moderator: apoio na equipe de suporte, revisão de regras e suporte global.</p>
           <div class="buttons">
             <a class="btn primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Join</a>
           </div>
@@ -156,10 +145,10 @@
       </article>
 
       <article class="card">
-        <img class="thumb" src="vampzin.png" alt="Vampz Community">
+        <img class="thumb" src="vampzin.png" alt="Vampzin Community">
         <div class="content">
-          <div class="title"><h3>Vampz Community</h3><span class="tag">6k+</span></div>
-          <p class="desc">Community Manager: staff pipeline, calendário de ações e melhoria contínua da experiência de membros.</p>
+          <div class="title"><h3>Vampzin Community</h3><span class="tag">6k+</span></div>
+          <p class="desc">Community Manager: gestão de equipe, calendário de ações e melhoria contínua da experiência dos membros.</p>
           <div class="buttons">
             <a class="btn primary" href="https://discord.gg/6uRgP7fg" target="_blank">Join</a>
           </div>
@@ -175,7 +164,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Fundo animado
     const c = document.getElementById('fx');
     const ctx = c.getContext('2d');
     let w,h,px;
@@ -197,4 +185,4 @@
     tick();
   </script>
 </body>
-  </html>
+          </html>
