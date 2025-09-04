@@ -1,91 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfólio Rebolexon</title>
+  <title>Rebolexon — Community Admin</title>
 
+  <!-- Fonte + Ícones -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
   <style>
     :root{
-      --bg1:#0b0b11;
-      --bg2:#121225;
-      --stroke:#232444;
-      --txt:#e7e7ff;
-      --sub:#aab0ff;
-      --accent:#8b5cf6;
-      --accent2:#06b6d4;
-      --glow: 0 0 24px rgba(139,92,246,.45), 0 0 64px rgba(6,182,212,.28);
-      --radius: 18px;
+      --bg1:#0a0b12; --bg2:#111229;
+      --card:#0f1023cc; --stroke:#26294d;
+      --txt:#e8e8ff; --sub:#b6bbff;
+      --a1:#8b5cf6; /* roxo */
+      --a2:#06b6d4; /* ciano */
+      --glow: 0 0 28px rgba(139,92,246,.45), 0 0 64px rgba(6,182,212,.25);
+      --radius:18px; --speed:.35s;
     }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; font-family:Inter, sans-serif; color:var(--txt);
-      background: radial-gradient(1200px 800px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
-                  radial-gradient(900px 700px at -10% 110%, rgba(6,182,212,.20), transparent 60%),
-                  linear-gradient(180deg, var(--bg2), var(--bg1));
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(900px 600px at 90% -10%, rgba(139,92,246,.25), transparent 60%),
+        radial-gradient(800px 600px at -10% 110%, rgba(6,182,212,.20), transparent 60%),
+        linear-gradient(180deg,var(--bg2),var(--bg1));
       overflow-x:hidden;
     }
-    canvas#fx{position:fixed; inset:0; z-index:-1; filter: blur(.3px) saturate(120%);}
-    .wrap{width:min(1150px, 92%); margin-inline:auto;}
-    
+
+    /* Fundo animado (partículas + orbes) */
+    #fx, #orbs{position:fixed; inset:0; z-index:-2}
+    #fx{filter: blur(.4px) saturate(120%)}
+    #orbs{pointer-events:none; opacity:.6}
+    .orb{
+      position:absolute; width:420px; height:420px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(139,92,246,.45), rgba(6,182,212,.15));
+      filter: blur(40px);
+      animation: float 14s ease-in-out infinite;
+    }
+    .orb.o1{top:-120px; right:-80px; animation-delay:.2s}
+    .orb.o2{bottom:-160px; left:-120px; animation-delay:1.1s}
+    @keyframes float{
+      0%,100%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(40px) translateX(20px)}
+    }
+
+    .wrap{width:min(1150px,92%); margin-inline:auto}
+
+    /* Header glass */
     header{
       position:sticky; top:12px; z-index:10;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, #0f1022aa, #0b0b11aa);
-      border:1px solid var(--stroke);
-      border-radius: 999px;
-      padding:10px 16px;
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 16px; border-radius:999px;
+      background:linear-gradient(180deg,#0f1022aa,#0b0b11aa);
+      border:1px solid var(--stroke); backdrop-filter: blur(10px);
       box-shadow: var(--glow);
     }
-    .brand{display:flex; align-items:center; gap:12px;}
-    .brand .dot{width:12px; height:12px; border-radius:50%;
-      background: conic-gradient(from 0deg, var(--accent), var(--accent2));
-      animation: pulse 2.5s infinite;
-    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .dot{width:12px; height:12px; border-radius:50%;
+      background: conic-gradient(from 0deg,var(--a1),var(--a2));
+      box-shadow:0 0 14px rgba(139,92,246,.6);
+      animation:pulse 2.6s infinite}
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-    .brand h1{font-size:16px; margin:0; font-weight:800;}
-    .brand span{font-size:12px; color:var(--sub);}
-    .actions a{
-      text-decoration:none; color:var(--txt); font-weight:600; font-size:14px;
+    .brand h1{margin:0; font-size:16px; font-weight:800; letter-spacing:.3px}
+    .brand span{font-size:12px; color:var(--sub)}
+    .actions{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{
+      text-decoration:none; color:var(--txt); font-weight:700; letter-spacing:.3px;
       padding:10px 14px; border:1px solid var(--stroke); border-radius:12px;
       display:inline-flex; align-items:center; gap:8px;
-      transition:.3s;
+      background:linear-gradient(180deg,#0f1128,#0c0e20);
+      transition: transform var(--speed), border-color var(--speed), background var(--speed);
     }
-    .actions a:hover{transform:translateY(-1px); background:#151632}
-    .cta{background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border:none; color:#0c0c14 !important; box-shadow: var(--glow);}
-    
-    .hero{text-align:center; padding:60px 0 30px;}
-    .hero h2{font-size:clamp(28px, 5vw, 48px); margin:0 0 10px;}
-    .hero p{color:var(--sub); max-width:700px; margin:0 auto 22px;}
-    .badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
-    .badge{border:1px solid var(--stroke); border-radius:999px; padding:8px 12px; font-size:13px; color:#bfc3ff;}
-    
-    .grid{display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin:20px 0 60px;}
-    .card{border-radius:var(--radius); border:1px solid var(--stroke); overflow:hidden;
-      background: linear-gradient(180deg, #0f1023cc, #0a0b18cc); box-shadow: var(--glow); transition:.3s;}
-    .card:hover{transform:translateY(-4px); border-color:#3a3d74;}
-    .thumb{width:100%; height:180px; object-fit:cover;}
-    .content{padding:16px;}
-    .title{display:flex; justify-content:space-between; align-items:center;}
-    .title h3{margin:0; font-size:18px;}
-    .tag{font-size:12px; padding:6px 8px; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14; font-weight:800;}
-    .desc{color:#c9ccff; font-size:14px; margin:10px 0;}
-    .buttons{display:flex; gap:10px;}
-    .btn{flex:1; text-align:center; padding:10px; border-radius:12px; text-decoration:none; color:var(--txt); border:1px solid var(--stroke);}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14; border:none;}
-    
-    footer{text-align:center; padding:30px 0; color:#a8acff88;}
+    .btn:hover{transform:translateY(-1px); border-color:#393c72}
+    .btn.cta{background:linear-gradient(90deg,var(--a1),var(--a2)); border:none; color:#0b0b14}
+    .btn i{font-size:18px}
+
+    /* Hero */
+    .hero{padding:84px 0 26px; text-align:center}
+    .hero h2{margin:0 0 10px; font-size:clamp(28px,5vw,48px); line-height:1.05}
+    .hero p{margin:0 auto 22px; color:var(--sub); max-width:760px}
+    .badges{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+    .badge{
+      border:1px solid var(--stroke); border-radius:999px; padding:8px 12px; font-size:13px; color:#c5c9ff;
+      background:linear-gradient(180deg,#10122b,#0d0f22);
+      display:inline-flex; align-items:center; gap:8px
+    }
+
+    /* Sobre mim */
+    .about{
+      margin: 24px auto 10px; padding:16px 18px; border-radius:16px;
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg,#0f1023cc,#0a0b18cc);
+      box-shadow: var(--glow);
+    }
+    .about h3{margin:0 0 8px; font-size:18px}
+    .about p{margin:0; color:#cfd2ff; line-height:1.5}
+
+    /* Grid */
+    .grid{
+      display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:26px 0 60px
+    }
+    @media (max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg,#0f1023cc,#0a0b18cc);
+      box-shadow: 0 0 0 1px rgba(139,92,246,.06) inset, var(--glow);
+      transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed);
+      transform: translateZ(0);
+    }
+    .card::before{
+      content:""; position:absolute; inset:-120px;
+      background:
+        radial-gradient(300px 180px at var(--mx,70%) var(--my,30%), rgba(139,92,246,.28), transparent 60%),
+        radial-gradient(240px 160px at calc(var(--mx,70%) - 20%) calc(var(--my,30%) + 20%), rgba(6,182,212,.20), transparent 60%);
+      opacity:.75; pointer-events:none; transition:opacity .25s
+    }
+    .card:hover{transform:translateY(-4px); border-color:#3a3d74}
+    .thumb{width:100%; aspect-ratio:16/10; object-fit:cover; display:block; filter:saturate(112%);
+           transform:scale(1.01); transition:transform .55s ease}
+    .card:hover .thumb{transform:scale(1.05)}
+    .content{padding:16px 14px 14px}
+    .title{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .title h3{margin:0; font-size:18px}
+    .tag{
+      font-size:11px; padding:6px 8px; border-radius:999px; color:#0b0b14;
+      background:linear-gradient(90deg,var(--a1),var(--a2)); font-weight:800; letter-spacing:.3px
+    }
+    .desc{color:#c9ccff; font-size:14px; line-height:1.45; margin:8px 0 12px; min-height:3.2em}
+    .meta{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+    .chip{font-size:12px; color:#b8bdff; border:1px solid #2c2f5a; padding:6px 8px; border-radius:999px; background:#0f1230}
+    .buttons{display:flex; gap:10px}
+    .link{flex:1; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.3px;
+          padding:10px 12px; border-radius:12px; border:1px solid var(--stroke); color:var(--txt);
+          background:linear-gradient(180deg,#0f1128,#0c0e20)}
+    .link.primary{background:linear-gradient(90deg,var(--a1),var(--a2)); color:#0b0b14; border:none}
+    .link:hover{transform:translateY(-2px); border-color:#3b3e72}
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(16px); transition:.6s ease}
+    .reveal.on{opacity:1; transform:none}
+
+    /* Footer */
+    footer{padding:40px 0 64px; color:#a8acff80; text-align:center}
+    footer a{color:#a8acff; text-decoration:none}
   </style>
 </head>
 <body>
+  <!-- Fundo animado -->
   <canvas id="fx"></canvas>
+  <div id="orbs">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+  </div>
 
   <div class="wrap">
-    <header>
+    <!-- Header -->
+    <header class="reveal">
       <div class="brand">
         <span class="dot"></span>
         <div>
@@ -93,96 +172,171 @@
           <span>Community Administrator • Server Builder</span>
         </div>
       </div>
-      <div class="actions">
-        <a class="cta" href="https://discord.com/users/SEU_ID" target="_blank"><i class="ri-discord-fill"></i> Contact</a>
-        <a href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-line"></i> Email</a>
-        <a href="https://github.com/rebolexon1" target="_blank"><i class="ri-github-fill"></i> GitHub</a>
-      </div>
+      <nav class="actions">
+        <a class="btn cta" href="https://discord.com/users/SEU_ID" target="_blank" rel="noopener">
+          <i class="ri-discord-fill"></i> Contact
+        </a>
+        <a class="btn" href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-line"></i> Email</a>
+        <a class="btn" href="https://github.com/rebolexon1" target="_blank" rel="noopener"><i class="ri-github-fill"></i> GitHub</a>
+      </nav>
     </header>
 
-    <section class="hero">
+    <!-- Hero -->
+    <section class="hero reveal">
       <h2>Safe & Engaging Communities</h2>
-      <p>Experiência em gerenciamento de servidores entre 6k e 75k membros. Atuação com coordenação de equipes, administração de comunidades e criação de ambientes seguros e engajadores.</p>
+      <p>Community Administrator com experiência administrando servidores de <strong>6k a 75k</strong> membros. 
+        Focado em <strong>segurança</strong>, <strong>organização</strong> e <strong>crescimento saudável</strong>, 
+        coordenando equipes e construindo comunidades estruturadas.</p>
       <div class="badges">
         <span class="badge"><i class="ri-shield-star-line"></i> Safety First</span>
         <span class="badge"><i class="ri-team-line"></i> Staff Coordination</span>
-        <span class="badge"><i class="ri-rocket-line"></i> Growth</span>
+        <span class="badge"><i class="ri-rocket-line"></i> Growth & Engagement</span>
+        <span class="badge"><i class="ri-tools-line"></i> Server Builder</span>
       </div>
     </section>
 
+    <!-- Sobre mim -->
+    <section class="about reveal">
+      <h3>Sobre mim</h3>
+      <p>
+        Administrador de comunidade com atuação em coordenação de staff, moderação e criação de ambientes seguros. 
+        Experiência prática em políticas de segurança, estruturação de canais, eventos e operação do dia a dia. 
+        Contato: <a href="mailto:rebolexonxon@gmail.com">rebolexonxon@gmail.com</a>.
+      </p>
+    </section>
+
+    <!-- Servidores -->
     <section class="grid">
-      <article class="card">
+      <!-- The Ocean -->
+      <article class="card reveal" data-tilt>
         <img class="thumb" src="theocean.png" alt="The Ocean">
         <div class="content">
-          <div class="title"><h3>The Ocean</h3><span class="tag">53k+</span></div>
+          <div class="title">
+            <h3>The Ocean</h3>
+            <span class="tag">53k+</span>
+          </div>
           <p class="desc">Coordenador geral: políticas de segurança, estrutura de canais, eventos e integração da equipe de moderação.</p>
+          <div class="meta">
+            <span class="chip"><i class="ri-shield-check-line"></i> Safety</span>
+            <span class="chip"><i class="ri-mic-2-line"></i> Events</span>
+            <span class="chip"><i class="ri-user-star-line"></i> Team Lead</span>
+          </div>
           <div class="buttons">
-            <a class="btn primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Join</a>
+            <a class="link primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Entrar no servidor</a>
           </div>
         </div>
       </article>
 
-      <article class="card">
+      <!-- PlaggVerse -->
+      <article class="card reveal" data-tilt>
         <img class="thumb" src="plaggverse.png" alt="PlaggVerse">
         <div class="content">
-          <div class="title"><h3>PlaggVerse</h3><span class="tag">48k+</span></div>
-          <p class="desc">Community Moderator: parte da equipe de suporte.</p>
+          <div class="title">
+            <h3>PlaggVerse</h3>
+            <span class="tag">48k+</span>
+          </div>
+          <p class="desc">Community Moderator / Suporte.</p>
+          <div class="meta">
+            <span class="chip"><i class="ri-chat-1-line"></i> Support</span>
+            <span class="chip"><i class="ri-verified-badge-line"></i> Trust</span>
+          </div>
           <div class="buttons">
-            <a class="btn primary" href="https://discord.gg/plaggxzin" target="_blank">Join</a>
+            <a class="link primary" href="https://discord.gg/plaggxzin" target="_blank">Entrar no servidor</a>
           </div>
         </div>
       </article>
 
-      <article class="card">
+      <!-- MDL -->
+      <article class="card reveal" data-tilt>
         <img class="thumb" src="mdl.png" alt="MDL">
         <div class="content">
-          <div class="title"><h3>MDL</h3><span class="tag">75k+</span></div>
-          <p class="desc">Community Moderator: apoio na equipe de suporte, revisão de regras e suporte global.</p>
+          <div class="title">
+            <h3>MDL</h3>
+            <span class="tag">75k+</span>
+          </div>
+          <p class="desc">Community Moderator / Suporte. Revisão de regras e apoio em tickets/anti-raid.</p>
+          <div class="meta">
+            <span class="chip"><i class="ri-ticket-2-line"></i> Tickets</span>
+            <span class="chip"><i class="ri-shield-keyhole-line"></i> Anti-raid</span>
+          </div>
           <div class="buttons">
-            <a class="btn primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Join</a>
+            <a class="link primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Entrar no servidor</a>
           </div>
         </div>
       </article>
 
-      <article class="card">
-        <img class="thumb" src="vampzin.png" alt="Vampzin Community">
+      <!-- Vampz Community -->
+      <article class="card reveal" data-tilt>
+        <img class="thumb" src="vampzin.png" alt="Vampz Community">
         <div class="content">
-          <div class="title"><h3>Vampzin Community</h3><span class="tag">6k+</span></div>
+          <div class="title">
+            <h3>Vampz Community</h3>
+            <span class="tag">6k+</span>
+          </div>
           <p class="desc">Community Manager: gestão de equipe, calendário de ações e melhoria contínua da experiência dos membros.</p>
+          <div class="meta">
+            <span class="chip"><i class="ri-group-line"></i> Community</span>
+            <span class="chip"><i class="ri-timer-2-line"></i> Ops</span>
+            <span class="chip"><i class="ri-sparkling-line"></i> UX</span>
+          </div>
           <div class="buttons">
-            <a class="btn primary" href="https://discord.gg/6uRgP7fg" target="_blank">Join</a>
+            <a class="link primary" href="https://discord.gg/6uRgP7fg" target="_blank">Entrar no servidor</a>
           </div>
         </div>
       </article>
     </section>
 
-    <footer>
-      © <span id="year"></span> Rebolexon — Todos os direitos reservados.
+    <footer class="reveal">
+      © <span id="year"></span> Rebolexon • Portfólio. Feito com ❤️ e <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>.
     </footer>
   </div>
 
   <script>
+    // Ano dinâmico
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const c = document.getElementById('fx');
-    const ctx = c.getContext('2d');
-    let w,h,px;
-    function resize(){
-      w=c.width=innerWidth; h=c.height=innerHeight;
-      px=Array.from({length:100},()=>({x:Math.random()*w,y:Math.random()*h,vx:Math.random()-.5,vy:Math.random()*.7+0.2}));
+    // Reveal on scroll
+    const obs = new IntersectionObserver((els)=>{
+      els.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); }});
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // Hover parallax nas cards
+    for(const card of document.querySelectorAll('.card')){
+      card.addEventListener('pointermove', e=>{
+        const r = card.getBoundingClientRect();
+        const mx = ((e.clientX - r.left)/r.width)*100;
+        const my = ((e.clientY - r.top)/r.height)*100;
+        card.style.setProperty('--mx', mx + '%');
+        card.style.setProperty('--my', my + '%');
+      });
     }
-    addEventListener('resize',resize); resize();
-    function tick(){
+
+    // Partículas de brilho
+    const c = document.getElementById('fx'); const ctx = c.getContext('2d');
+    let w,h,px;
+    const R = (a,b)=>a+Math.random()*(b-a);
+    function resize(){
+      w = c.width = innerWidth; h = c.height = innerHeight;
+      const n = Math.min(130, Math.floor(w*h/18000));
+      px = Array.from({length:n}, ()=>({
+        x:R(0,w), y:R(0,h), s:R(.6,1.8), a:R(.25,.75), vx:R(-.25,.25), vy:R(.18,.6)
+      }));
+    }
+    addEventListener('resize', resize); resize();
+    (function loop(){
       ctx.clearRect(0,0,w,h);
       for(const p of px){
         p.x+=p.vx; p.y+=p.vy;
-        if(p.y>h) p.y=0;
-        ctx.fillStyle="rgba(139,92,246,0.3)";
-        ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
+        if(p.x<0||p.x>w) p.vx*=-1;
+        if(p.y>h){ p.y=-10; p.x=R(0,w); }
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 26*p.s);
+        g.addColorStop(0, `rgba(139,92,246,${0.28*p.a})`);
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,26*p.s,0,Math.PI*2); ctx.fill();
       }
-      requestAnimationFrame(tick);
-    }
-    tick();
+      requestAnimationFrame(loop);
+    })();
   </script>
 </body>
   </html>
