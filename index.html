@@ -1,320 +1,422 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio Rebolexon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-  <style>
-    :root {
-      --bg1: #0a0a14;
-      --bg2: #121225;
-      --accent: #8b5cf6;
-      --accent2: #06b6d4;
-      --txt: #e7e7ff;
-      --sub: #aab0ff;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--txt);
-      background: linear-gradient(180deg,var(--bg1),var(--bg2));
-      overflow-x:hidden;
-      scroll-behavior:smooth;
-    }
-    section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 20px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease;
-    }
-    section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    h1,h2 { margin-bottom: 20px; }
-    p { max-width: 800px; margin: auto; line-height: 1.6; color: var(--sub); }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfólio – Rebolexon</title>
 
-    /* NAV */
-    nav {
-      position: fixed; top:20px; left:50%; transform:translateX(-50%);
-      background: rgba(10,10,20,.8);
-      border:1px solid #222;
-      border-radius: 999px;
-      padding: 10px 20px;
-      display:flex; gap:20px;
-      z-index:1000;
-      backdrop-filter: blur(10px);
-    }
-    nav a {
-      color: var(--txt);
-      text-decoration:none;
-      font-weight:600;
-      transition:.3s;
-    }
-    nav a:hover { color: var(--accent2); }
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
-    /* Transição de página overlay */
-    #page-transition {
-      position: fixed;
-      top:0; left:0; width:100%; height:100%;
-      background: linear-gradient(135deg,var(--accent),var(--accent2));
-      z-index:2000;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .8s ease;
-      pointer-events:none;
-    }
-    #page-transition.active {
-      transform: scaleX(1);
-    }
+<!-- AOS (scroll animations) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
 
-    /* Partículas */
-    canvas#fx {
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      z-index:0;
-      pointer-events:none;
-    }
+<style>
+:root{
+  --bg1:#0b0b11; --bg2:#121225; --card:#0c0d1e; --stroke:#232444;
+  --txt:#e8e9ff; --sub:#aab0ff; --accent:#8b5cf6; --accent2:#06b6d4;
+  --glow: 0 0 24px rgba(139,92,246,.45), 0 0 64px rgba(6,182,212,.28);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html,body{scroll-behavior:smooth}
+body{
+  margin:0; font-family:Inter,sans-serif; color:var(--txt);
+  background:
+    radial-gradient(1000px 700px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
+    radial-gradient(900px 700px at -10% 110%, rgba(6,182,212,.18), transparent 60%),
+    linear-gradient(180deg, var(--bg2), var(--bg1));
+  overflow-x:hidden;
+}
+.wrap{width:min(1200px,92%); margin-inline:auto}
 
-    /* Balões de fala com ícones */
-    .speech {
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      background: rgba(20,20,40,.7);
-      border: 1px solid #333;
-      border-radius: 18px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 700px;
-      animation: float 3s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(139,92,246,.3);
-      text-align:left;
-    }
-    .speech i {
-      font-size: 26px;
-      color: var(--accent2);
-      flex-shrink:0;
-      margin-top:2px;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+/* Canvas de partículas */
+#fx{position:fixed; inset:0; z-index:-2; filter: blur(.3px) saturate(120%);}
 
-    /* SERVERS GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 24px;
-      margin-top: 40px;
-      width: 100%;
-      max-width: 1000px;
-    }
-    .card {
-      background: rgba(20,20,40,.7);
-      border:1px solid #333;
-      border-radius:18px;
-      padding:20px;
-      transition:.6s;
-      opacity:0;
-      transform: translateY(40px);
-    }
-    .card.show {
-      opacity:1;
-      transform: translateY(0);
-    }
-    .card:hover {
-      transform: translateY(-10px) scale(1.03);
-      border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(139,92,246,.4);
-    }
-    .card img {
-      width:100%;
-      height:150px;
-      object-fit:cover;
-      border-radius:12px;
-      margin-bottom:15px;
-    }
-    .join-btn {
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 16px;
-      border-radius:12px;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      color:#0a0a14;
-      font-weight:700;
-      text-decoration:none;
-      transition:.3s;
-    }
-    .join-btn:hover {
-      filter:brightness(1.2);
-      transform:scale(1.05);
-    }
+/* NAV */
+nav{
+  position:sticky; top:14px; z-index:20; display:flex; justify-content:center;
+}
+.nav-inner{
+  display:flex; align-items:center; gap:10px; padding:10px 14px;
+  border:1px solid var(--stroke); border-radius:999px;
+  backdrop-filter: blur(10px);
+  background:linear-gradient(180deg,#0f1022aa,#0b0b11aa);
+  box-shadow:var(--glow);
+}
+.brand{
+  display:flex; align-items:center; gap:10px; padding:6px 12px; border-radius:999px;
+}
+.brand .dot{width:12px;height:12px;border-radius:50%;
+  background:conic-gradient(var(--accent),var(--accent2));
+  box-shadow:0 0 14px rgba(139,92,246,.6); animation:pulse 2.6s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.brand h1{margin:0;font-size:16px;font-weight:800}
+.brand span{color:var(--sub); font-size:12px}
+.nav-links a{
+  text-decoration:none; color:var(--txt); padding:10px 14px; font-weight:600; border-radius:12px;
+  position:relative; display:inline-flex; align-items:center; gap:8px; border:1px solid transparent;
+}
+.nav-links a:hover{border-color:#31356a; background:#14153a}
+.nav-links .cta{
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14;
+  border:none; box-shadow:var(--glow); font-weight:800;
+}
 
-    /* CONTACT */
-    .contact-box {
-      background: rgba(20,20,40,.7);
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 0 25px rgba(139,92,246,.4);
-      animation: float 4s ease-in-out infinite;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-    }
-    .contact-box.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .contact-icons {
-      display:flex; gap:30px; margin-top:20px; justify-content:center;
-    }
-    .contact-icons a {
-      font-size:48px;
-      color: var(--txt);
-      transition:.3s;
-    }
-    .contact-icons a:hover {
-      color: var(--accent2);
-      transform:scale(1.2);
-    }
-  </style>
+/* SECTIONS BASE */
+section{min-height:100svh; display:grid; place-items:center; position:relative}
+.section-inner{width:100%; display:grid; gap:26px}
+
+/* HERO / APRESENTAÇÃO */
+.hero-grid{
+  display:grid; grid-template-columns: 1.2fr .8fr; gap:30px; align-items:center;
+}
+.card{
+  background:linear-gradient(180deg,#0f1023e0,#0a0b18e0);
+  border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--glow);
+  overflow:hidden; position:relative;
+}
+.hero-card{padding:30px}
+.hero-title{
+  font-size:clamp(28px,5vw,54px); line-height:1.05; margin:0 0 12px; font-weight:800;
+}
+.hero-lines{display:grid; gap:12px; margin:12px 0 18px}
+.line{display:flex; gap:10px; align-items:flex-start}
+.line i{font-size:22px; margin-top:2px; opacity:.95}
+.line span{color:#c8ccff}
+.pills{display:flex; gap:10px; flex-wrap:wrap}
+.pill{border:1px solid var(--stroke); border-radius:999px; padding:8px 12px; color:#cdd1ff; font-size:13px}
+.hero-art{
+  display:grid; place-items:center; position:relative; padding:26px;
+}
+.hero-blob{
+  width:min(520px,90%); aspect-ratio:1; border-radius:40px;
+  background: radial-gradient(80% 80% at 70% 20%, rgba(139,92,246,.55), transparent 50%),
+              radial-gradient(80% 80% at 20% 80%, rgba(6,182,212,.45), transparent 50%),
+              #0b0c1e;
+  border:1px solid #2e3160; box-shadow: inset 0 0 80px #0008, var(--glow);
+}
+.type{
+  font-size:16px; color:#b9beff; min-height:24px; margin-top:6px;
+  border-left:3px solid var(--accent); padding-left:10px
+}
+
+/* COMUNIDADES */
+.grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;
+}
+.server{
+  cursor:pointer; transform-style:preserve-3d; will-change:transform;
+}
+.thumb{height:190px; width:100%; object-fit:cover; display:block}
+.content{padding:16px}
+.title{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.title h3{margin:0; font-size:20px}
+.tag{font-size:12px; padding:6px 8px; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14; font-weight:800}
+.desc{color:#c9ccff; font-size:14px; margin:10px 0}
+.btnrow{display:flex; gap:10px}
+.btn{
+  flex:1; text-align:center; padding:11px 12px; border-radius:12px; text-decoration:none; color:var(--txt);
+  border:1px solid var(--stroke); position:relative; overflow:hidden;
+}
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14; border:none; font-weight:800;
+  box-shadow: var(--glow);
+}
+.btn.primary::after{
+  content:""; position:absolute; inset:-40% -60%; background:conic-gradient(from 0deg, transparent, #fff6, transparent 30%);
+  animation:spin 3.8s linear infinite; filter: blur(18px); opacity:.35;
+}
+@keyframes spin{to{transform:rotate(1turn)}}
+
+/* CONTATO */
+.contact-wrap{
+  display:grid; grid-template-columns: .9fr 1.1fr; gap:26px; align-items:center;
+}
+.contact-card{padding:26px}
+.contact-big{
+  padding:26px;
+  display:grid; align-content:center; gap:14px; text-align:center;
+}
+.contact-title{font-size:clamp(26px,4.5vw,42px); margin:0}
+.contact-sub{color:#c7cbff}
+.contact-cta{
+  display:grid; gap:10px; grid-template-columns:1fr 1fr;
+}
+.icon-link{
+  display:flex; align-items:center; justify-content:center; gap:10px; padding:14px;
+  border-radius:14px; text-decoration:none; font-weight:800; border:1px solid var(--stroke);
+  background:#10122b; transition:.25s;
+}
+.icon-link:hover{transform:translateY(-2px); border-color:#353a7a}
+.icon-link i{font-size:20px}
+.discord{background:linear-gradient(90deg,#5865F2,#06b6d4); color:#0b0b14; border:none; box-shadow:var(--glow)}
+.email{color:#eaeaff}
+
+/* FOOT */
+footer{color:#a8acff80; text-align:center; padding:26px}
+
+/* SEÇÃO HEADERS */
+.section-title{
+  font-size:14px; letter-spacing:.25em; color:#9aa0ff; text-transform:uppercase; font-weight:800;
+}
+
+/* Helper */
+.hide{display:none}
+.audio-widget{
+  position:fixed; right:14px; bottom:14px; z-index:30;
+  background:#0b0c1fdd; border:1px solid var(--stroke); border-radius:16px; padding:8px 10px;
+  display:flex; align-items:center; gap:8px; box-shadow:var(--glow)
+}
+.audio-widget button{
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0b14; border:none;
+  padding:8px 10px; border-radius:10px; font-weight:800; cursor:pointer
+}
+.audio-widget span{color:#cfd2ff; font-size:13px}
+</style>
 </head>
 <body>
+<canvas id="fx"></canvas>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#apresentacao">Apresentação</a>
-    <a href="#servidores">Servidores</a>
-    <a href="#contato">Contato</a>
-  </nav>
+<nav>
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <h1>Rebolexon</h1>
+        <span>Community Administrator • Server Builder</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#apresentacao"><i class="ri-user-3-line"></i> Apresentação</a>
+      <a href="#comunidades"><i class="ri-community-line"></i> Comunidades</a>
+      <a class="cta" href="#contato"><i class="ri-send-plane-2-fill"></i> Contato</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- Overlay de transição -->
-  <div id="page-transition"></div>
+<!-- PÁGINA 1 – APRESENTAÇÃO -->
+<section id="apresentacao">
+  <div class="wrap section-inner">
+    <div class="section-title" data-aos="fade-up">Apresentação</div>
 
-  <canvas id="fx"></canvas>
+    <div class="hero-grid">
+      <div class="card hero-card" data-aos="fade-right" data-aos-duration="900">
+        <h2 class="hero-title">Construindo comunidades <span style="background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; color:transparent">seguras e ativas</span></h2>
 
-  <!-- PAGE 1 -->
-  <section id="apresentacao">
-    <h1>👋 Olá, eu sou o Rebolexon</h1>
-    <div class="speech"><i class="ri-user-star-fill"></i> Sou administrador e construtor de servidores Discord, com experiência em comunidades de 6k a 75k membros.</div>
-    <div class="speech"><i class="ri-team-fill"></i> Atuo na criação de ambientes seguros, bem estruturados e ativos, sempre focado na coordenação de staff e suporte.</div>
-    <div class="speech"><i class="ri-rocket-2-fill"></i> Minha paixão é transformar servidores em comunidades sólidas, engajadas e com excelente experiência para todos.</div>
-  </section>
+        <div class="type" id="type"></div>
 
-  <!-- PAGE 2 -->
-  <section id="servidores">
-    <h2>🌐 Servidores em que trabalhei</h2>
+        <div class="hero-lines">
+          <div class="line"><i class="ri-shield-check-line"></i><span>Foco total em segurança, prevenção a raids, revisão de regras e fluxos claros de suporte.</span></div>
+          <div class="line"><i class="ri-team-line"></i><span>Coordenação de equipe: recrutamento, rotas de atendimento e rotina de moderação.</span></div>
+          <div class="line"><i class="ri-rocket-line"></i><span>Estrutura de canais, eventos e experiências que mantêm a comunidade engajada de forma saudável.</span></div>
+        </div>
+
+        <div class="pills">
+          <span class="pill"><i class="ri-time-line"></i> 3+ anos de experiência</span>
+          <span class="pill"><i class="ri-user-follow-line"></i> 6k → 75k membros</span>
+          <span class="pill"><i class="ri-magic-line"></i> Anti-raid & Tickets</span>
+          <span class="pill"><i class="ri-presentation-line"></i> Eventos & Calendário</span>
+        </div>
+      </div>
+
+      <div class="card hero-art" data-aos="fade-left" data-aos-duration="900">
+        <div class="hero-blob" id="blob"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PÁGINA 2 – COMUNIDADES -->
+<section id="comunidades">
+  <div class="wrap section-inner">
+    <div class="section-title" data-aos="fade-up">Comunidades</div>
+
     <div class="grid">
-      <div class="card">
-        <img src="theocean.png" alt="The Ocean">
-        <h3>The Ocean (53k+)</h3>
-        <p>Coordenador geral: segurança, estrutura de canais, eventos e equipe de moderação.</p>
-        <a class="join-btn" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank">Join</a>
+
+      <!-- The Ocean -->
+      <article class="card server" data-tilt data-aos="zoom-in-up" data-aos-delay="50">
+        <img class="thumb" src="theocean.png" alt="The Ocean">
+        <div class="content">
+          <div class="title"><h3>The Ocean</h3><span class="tag">53k+</span></div>
+          <p class="desc">Coordenador geral: políticas de segurança, estrutura de canais, eventos e integração da equipe de moderação.</p>
+          <div class="btnrow">
+            <a class="btn primary" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank" rel="noreferrer">Join</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- PlaggVerse -->
+      <article class="card server" data-tilt data-aos="zoom-in-up" data-aos-delay="150">
+        <img class="thumb" src="plaggverse.png" alt="PlaggVerse">
+        <div class="content">
+          <div class="title"><h3>PlaggVerse</h3><span class="tag">48k+</span></div>
+          <p class="desc">Community Moderator / Suporte.</p>
+          <div class="btnrow">
+            <a class="btn primary" href="https://discord.gg/plaggxzin" target="_blank" rel="noreferrer">Join</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- MDL -->
+      <article class="card server" data-tilt data-aos="zoom-in-up" data-aos-delay="250">
+        <img class="thumb" src="mdl.png" alt="MDL">
+        <div class="content">
+          <div class="title"><h3>MDL</h3><span class="tag">75k+</span></div>
+          <p class="desc">Community Moderator / Suporte.</p>
+          <div class="btnrow">
+            <a class="btn primary" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank" rel="noreferrer">Join</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Vampzin -->
+      <article class="card server" data-tilt data-aos="zoom-in-up" data-aos-delay="350">
+        <img class="thumb" src="vampzin.png" alt="Vampzin Community">
+        <div class="content">
+          <div class="title"><h3>Vampzin Community</h3><span class="tag">6k+</span></div>
+          <p class="desc">Community Manager: gestão de equipe, calendário de ações e melhoria contínua da experiência dos membros.</p>
+          <div class="btnrow">
+            <a class="btn primary" href="https://discord.gg/6uRgP7fg" target="_blank" rel="noreferrer">Join</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- PÁGINA 3 – CONTATO -->
+<section id="contato">
+  <div class="wrap section-inner">
+    <div class="section-title" data-aos="fade-up">Contato</div>
+
+    <div class="contact-wrap">
+      <div class="card contact-card" data-aos="fade-right">
+        <div class="line"><i class="ri-discuss-line"></i><span>Vamos conversar sobre como deixar sua comunidade mais segura, organizada e divertida.</span></div>
+        <div class="line"><i class="ri-lightbulb-flash-line"></i><span>Planejamento de estrutura, regras, tickets, anti-raid e calendário de eventos.</span></div>
+        <div class="line"><i class="ri-pulse-line"></i><span>Métricas de suporte e experiência do membro, com rotas claras de atendimento.</span></div>
       </div>
-      <div class="card">
-        <img src="plaggverse.png" alt="PlaggVerse">
-        <h3>PlaggVerse (48k+)</h3>
-        <p>Community Moderator / Suporte: parte da equipe de suporte da comunidade.</p>
-        <a class="join-btn" href="https://discord.gg/plaggxzin" target="_blank">Join</a>
-      </div>
-      <div class="card">
-        <img src="mdl.png" alt="MDL">
-        <h3>MDL (75k+)</h3>
-        <p>Community Moderator / Suporte: responsável pela área de suporte global.</p>
-        <a class="join-btn" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank">Join</a>
-      </div>
-      <div class="card">
-        <img src="vampzin.png" alt="Vampzin">
-        <h3>Vampzin Community (6k+)</h3>
-        <p>Community Manager: gestão de equipe e melhoria da experiência dos membros.</p>
-        <a class="join-btn" href="https://discord.gg/6uRgP7fg" target="_blank">Join</a>
+
+      <div class="card contact-big" data-aos="fade-left">
+        <h3 class="contact-title">Fale comigo</h3>
+        <p class="contact-sub">Escolha o melhor canal e me chame. Respondo o mais rápido possível.</p>
+        <div class="contact-cta">
+          <a class="icon-link discord" href="https://discord.com/users/SEU_ID" target="_blank" rel="noreferrer">
+            <i class="ri-discord-fill"></i> Discord
+          </a>
+          <a class="icon-link email" href="mailto:rebolexonxon@gmail.com">
+            <i class="ri-mail-line"></i> Email
+          </a>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- PAGE 3 -->
-  <section id="contato">
-    <h2>📬 Entre em contato</h2>
-    <div class="contact-box">
-      <p>Se quiser conversar comigo, você pode me encontrar diretamente pelo Discord ou Email.</p>
-      <div class="contact-icons">
-        <a href="https://discord.com/users/SEU_ID" target="_blank"><i class="ri-discord-fill"></i></a>
-        <a href="mailto:rebolexonxon@gmail.com"><i class="ri-mail-fill"></i></a>
-      </div>
-    </div>
-  </section>
+    <footer>© <span id="year"></span> Rebolexon — Todos os direitos reservados.</footer>
+  </div>
+</section>
 
-  <script>
-    // Partículas animadas
-    const c = document.getElementById('fx');
-    const ctx = c.getContext('2d');
-    let w,h,particles;
+<!-- Música ambiente (coloque lofi.mp3 na raiz do repositório) -->
+<div class="audio-widget">
+  <button id="playAudio"><i class="ri-play-fill"></i> Ambiente</button>
+  <span id="audioHint">clique para tocar</span>
+</div>
+<audio id="bgm" src="lofi.mp3" loop></audio>
 
-    function resize(){
-      w=c.width=innerWidth; h=c.height=innerHeight;
-      particles=Array.from({length:120},()=>({
-        x:Math.random()*w,
-        y:Math.random()*h,
-        vx:Math.random()-.5,
-        vy:Math.random()*.7+0.2
-      }));
-    }
-    addEventListener('resize',resize); resize();
+<!-- Libs -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
 
-    function tick(){
-      ctx.clearRect(0,0,w,h);
-      for(const p of particles){
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.y>h) p.y=0;
-        if(p.x>w) p.x=0; if(p.x<0) p.x=w;
-        ctx.fillStyle="rgba(139,92,246,0.3)";
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,2,0,Math.PI*2);
-        ctx.fill();
-      }
-      requestAnimationFrame(tick);
-    }
-    tick();
+<script>
+/* ===== util ===== */
+const $ = (q,ctx=document)=>ctx.querySelector(q);
+const $$ = (q,ctx=document)=>[...ctx.querySelectorAll(q)];
 
-    // Animar seções ao aparecer
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('show');
-          entry.target.querySelectorAll('.card, .contact-box').forEach(el => {
-            setTimeout(()=> el.classList.add('show'), 200);
-          });
-        }
-      });
-    }, {threshold:0.2});
-    document.querySelectorAll('section, .card, .contact-box').forEach(el => observer.observe(el));
+/* ===== ano ===== */
+$('#year').textContent = new Date().getFullYear();
 
-    // Transição ao clicar no menu
-    const transition = document.getElementById("page-transition");
-    document.querySelectorAll("nav a").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const target = link.getAttribute("href");
-        transition.classList.add("active");
-        setTimeout(()=>{
-          document.querySelector(target).scrollIntoView({behavior:"smooth"});
-          transition.classList.remove("active");
-        },600);
-      });
-    });
-  </script>
+/* ===== partículas ===== */
+const c = document.getElementById('fx'), ctx = c.getContext('2d');
+let w,h,pts=[];
+function resize(){
+  w=c.width=innerWidth; h=c.height=innerHeight;
+  pts = Array.from({length:140}, ()=>({
+    x:Math.random()*w, y:Math.random()*h,
+    vx:(Math.random()-.5)*0.4, vy:(Math.random()-.1)*0.6,
+    r: Math.random()*2+0.6, c: Math.random()<.5 ? 'rgba(139,92,246,.28)' : 'rgba(6,182,212,.22)'
+  }));
+}
+addEventListener('resize', resize); resize();
+function tick(){
+  ctx.clearRect(0,0,w,h);
+  for(const p of pts){
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<-10) p.x=w+10; if(p.x>w+10) p.x=-10;
+    if(p.y<-10) p.y=h+10; if(p.y>h+10) p.y=-10;
+    ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ===== typing effect ===== */
+const typeTarget = $("#type");
+const lines = [
+  "Community Administrator • Server Builder",
+  "Experiência com 6k → 75k membros",
+  "Segurança, suporte e estrutura que funcionam"
+];
+let li=0, ci=0, del=false;
+function typer(){
+  const full = lines[li];
+  typeTarget.textContent = full.slice(0,ci);
+  if(!del && ci<full.length){ci++}
+  else if(del && ci>0){ci--}
+  else{
+    if(!del){setTimeout(()=>del=true,900)}
+    else{del=false; li=(li+1)%lines.length}
+  }
+  setTimeout(typer, del?35:42);
+}
+typer();
+
+/* ===== AOS ===== */
+AOS.init({ once:false, duration:700, offset:80, easing:'ease-out-cubic' });
+
+/* ===== Transições entre seções com GSAP ===== */
+$$('nav .nav-links a').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    gsap.to(window, {duration:.9, scrollTo: a.getAttribute('href'), ease:"power3.inOut"});
+  });
+});
+
+/* ===== blob anim ===== */
+const blob = $('#blob');
+gsap.to(blob, {duration:7, rotate:360, repeat:-1, ease:'none'});
+gsap.to(blob, {duration:3.2, yoyo:true, repeat:-1, boxShadow:'0 0 120px rgba(139,92,246,.45), 0 0 180px rgba(6,182,212,.28)'});
+
+/* ===== parallax nas cards ===== */
+$$('[data-tilt]').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - .5;
+    const y = (e.clientY - r.top)/r.height - .5;
+    card.style.transform = `rotateY(${x*10}deg) rotateX(${ -y*10}deg) translateZ(0)`;
+  });
+  card.addEventListener('mouseleave', ()=> card.style.transform='');
+});
+
+/* ===== áudio ===== */
+const bgm = $('#bgm'), playBtn = $('#playAudio'), hint=$('#audioHint');
+playBtn.addEventListener('click', async ()=>{
+  try{
+    if(bgm.paused){ await bgm.play(); playBtn.innerHTML='<i class="ri-pause-fill"></i> Pausar'; hint.textContent='tocando'; }
+    else { bgm.pause(); playBtn.innerHTML='<i class="ri-play-fill"></i> Ambiente'; hint.textContent='pausado';}
+  }catch(e){ hint.textContent='não foi possível tocar (adicione lofi.mp3)'; }
+});
+</script>
 </body>
-</html>
+  </html>
