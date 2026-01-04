@@ -26,13 +26,9 @@
     scroll-behavior:smooth; overflow-x:hidden;
   }
 
-  /* Fundo de partículas global (estrelas) */
   canvas#stars{position:fixed; inset:0; z-index:-2; filter:blur(.2px) saturate(115%);}
-
-  /* OVERLAY de transição com partículas */
   canvas#burst{position:fixed; inset:0; z-index:20; pointer-events:none; display:none;}
 
-  /* NAV – menor, mais animado e com sombra/glass */
   header{
     position:fixed; top:10px; left:50%; transform:translateX(-50%);
     z-index:10; display:flex; gap:10px;
@@ -52,13 +48,12 @@
     background:linear-gradient(90deg,var(--accent),var(--accent2)); }
   header a i{font-size:16px}
 
-  /* Seções empilhadas com entrada suave */
   section{
     min-height:100vh; padding:120px 20px 80px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     opacity:0; transform:translateY(34px) scale(.985);
     transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
-    position:relative; overflow:hidden; /* para o efeito “sumir” elegante */
+    position:relative; overflow:hidden;
   }
   section.active{opacity:1; transform:translateY(0) scale(1)}
   section.out{opacity:0; transform:translateY(-10px) scale(.992); filter:blur(4px);}
@@ -67,7 +62,6 @@
   .headline h1{font-size:clamp(28px,5.2vw,56px); margin-bottom:10px}
   .headline p{color:var(--sub); font-size:clamp(14px,1.8vw,18px)}
 
-  /* Balões (apresentação e CTAs) */
   .balloon{
     margin:16px auto 0; max-width:760px;
     padding:18px 22px; border-radius:18px;
@@ -84,7 +78,6 @@
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
   @keyframes swing{0%{transform:translateX(0)}50%{transform:translateX(12px)}100%{transform:translateX(0)}}
 
-  /* Grid e cards das comunidades (como já estava) */
   .grid{display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); width:min(1000px,92%); margin-top:28px}
   .card{
     background:rgba(15,17,45,.85); border:1px solid var(--stroke); border-radius:16px;
@@ -99,7 +92,6 @@
   .btn:hover{transform:translateY(-2px)}
   .join{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0c16; border:none}
 
-  /* Contatos */
   .contact-btns{display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:16px}
   .contact-btns a{display:flex; align-items:center; gap:8px; padding:14px 18px; border-radius:14px; text-decoration:none; font-weight:800; transition:.25s transform, .25s box-shadow}
   .contact-btns a.discord{background:#5865F2; color:#fff}
@@ -110,15 +102,12 @@
 </style>
 </head>
 <body>
-  <!-- Fundo -->
   <canvas id="stars"></canvas>
-  <!-- Overlay de transição -->
   <canvas id="burst"></canvas>
 
-  <!-- MENU -->
   <header>
     <a href="#home"><i class="ri-user-star-line"></i> Apresentação</a>
-    <a href="#work"><i class="ri-community-line"></i> Comunidades</a>
+    <a href="#work"><i class="ri-community-line"></i> Experiência & Bots</a>
     <a href="#contact"><i class="ri-send-plane-2-line"></i> Contato</a>
   </header>
 
@@ -126,19 +115,19 @@
   <section id="home" class="active">
     <div class="headline">
       <h1>Rebolexon</h1>
-      <p>Administrador de comunidade e builder de servidores focado em <strong>segurança</strong>, <strong>processos claros</strong> e <strong>experiências engajadoras</strong>.</p>
+      <p>Administrador e coordenador de comunidades de Discord com foco em <strong>segurança</strong>, <strong>processos claros</strong> e <strong>experiências engajadoras</strong>.</p>
     </div>
     <div class="balloon">
-      ✨ Tenho <strong>mais de 3 anos de experiência</strong> com gestão de comunidades no Discord.  
-      Desenvolvo <strong>projetos completos de servidores</strong> (arquitetura de canais, roles, automações e políticas de segurança) e executo <strong>planos de engajamento</strong> para manter a comunidade <strong>viva, ativa e unida</strong>.
+      ✨ Tenho experiência em grandes comunidades de 55k, 75k e 80k membros.<br>
+      Desenvolvo <strong>bots e automações</strong> (ticket, moderação, automod), crio políticas de segurança e coordeno equipes para manter a comunidade <strong>ativa, segura e organizada</strong>.
     </div>
   </section>
 
-  <!-- COMUNIDADES -->
+  <!-- EXPERIÊNCIA & BOTS -->
   <section id="work">
     <div class="headline">
-      <h1>Comunidades</h1>
-      <p>Comunidades em que atuo/atuei:</p>
+      <h1>Experiência & Bots</h1>
+      <p>Comunidades e projetos em que atuei:</p>
     </div>
 
     <div class="grid">
@@ -146,7 +135,7 @@
         <img src="theocean.png" alt="The Ocean">
         <div class="pad">
           <h3>The Ocean</h3>
-          <p>Coordenador geral: políticas de segurança, estrutura e integração da equipe.</p>
+          <p>Subdiretor: liderança de equipe, políticas de conduta, prevenção de spam/abuso, implementação de auditoria e registro de ações.</p>
           <a class="btn join" href="https://discord.gg/the-ocean-1220157933493551205" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
         </div>
       </div>
@@ -155,7 +144,7 @@
         <img src="plaggverse.png" alt="PlaggVerse">
         <div class="pad">
           <h3>PlaggVerse</h3>
-          <p>Community Moderator / Suporte.</p>
+          <p>Coordenador: gestão de equipe, resolução de conflitos, métricas de performance e melhoria da comunidade.</p>
           <a class="btn join" href="https://discord.gg/plaggxzin" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
         </div>
       </div>
@@ -164,7 +153,7 @@
         <img src="mdl.png" alt="MDL">
         <div class="pad">
           <h3>MDL</h3>
-          <p>Community Moderator / Suporte.</p>
+          <p>Coordenador: supervisão de workflows, aplicação de regras, criação de sistema de tickets e documentação da equipe.</p>
           <a class="btn join" href="https://discord.gg/mundo-da-lua-93780240394682777" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
         </div>
       </div>
@@ -173,8 +162,19 @@
         <img src="vampzin.png" alt="Vampzin Community">
         <div class="pad">
           <h3>Vampzin Community</h3>
-          <p>Community Manager: gestão de equipe, calendário de ações e melhorias.</p>
+          <p>Community Manager: planejamento de ações, coordenação de equipe e melhorias de processos internos.</p>
           <a class="btn join" href="https://discord.gg/6uRgP7fg" target="_blank" rel="noopener"><i class="ri-login-box-line"></i> Join</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="bot.png" alt="Bots Desenvolvidos">
+        <div class="pad">
+          <h3>Bots Desenvolvidos</h3>
+          <p>
+            <strong>Bot de Moderação & Automod:</strong> detecção automática de spam, flood e links maliciosos, aplicação de punições automáticas e registro de ações.<br>
+            <strong>Bot de Tickets:</strong> sistema estruturado de denúncias e suporte, categorização de abusos e histórico completo de interações.
+          </p>
         </div>
       </div>
     </div>
@@ -184,12 +184,11 @@
   <section id="contact">
     <div class="headline">
       <h1>Vamos conversar</h1>
-      <p>Aberto a oportunidades de moderação, coordenação e estrutura de comunidades.</p>
+      <p>Aberto a oportunidades de moderação, coordenação, bots e estruturação de comunidades.</p>
     </div>
 
-    <!-- Balão flutuante lateral (call-to-action) -->
     <div class="balloon badge">
-      💬 Fale comigo — <strong>Discord</strong> ou <strong>Email</strong>. Estou online e respondo rápido!
+      💬 Fale comigo — <strong>Discord</strong> ou <strong>Email</strong>. Respondo rápido!
     </div>
 
     <div class="contact-btns">
@@ -197,9 +196,8 @@
       <a href="mailto:rebolexonxon@gmail.com" class="email"><i class="ri-mail-line"></i> Email</a>
     </div>
 
-    <!-- Balão final para iniciar projeto -->
     <div class="balloon" style="margin-top:26px; background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b0c16; font-weight:900; text-align:center">
-      🚀 Bora começar seu <strong>novo projeto</strong> hoje?  
+      🚀 Bora começar seu <strong>novo projeto</strong> hoje?<br>
       <span style="display:block;opacity:.85;font-weight:700">Planejamento claro • Segurança robusta • Onboarding eficiente • Engajamento contínuo</span>
     </div>
 
@@ -207,98 +205,22 @@
   </section>
 
 <script>
-  // Ano
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  /* ===== Fundo de partículas (estrelas flutuando) ===== */
   const cv = document.getElementById('stars');
   const ctx = cv.getContext('2d');
   let W,H,pts=[];
-  function resize(){
-    W=cv.width=innerWidth; H=cv.height=innerHeight;
-    pts = Array.from({length:120}, ()=>({
-      x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.8+0.6,
-      vx:(Math.random()-.5)*.3, vy:Math.random()*.7+.2,
-      a:Math.random()*.7+.25
-    }));
-  }
+  function resize(){ W=cv.width=innerWidth; H=cv.height=innerHeight; pts=Array.from({length:120},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+0.6,vx:(Math.random()-.5)*.3,vy:Math.random()*.7+.2,a:Math.random()*.7+.25})); }
   addEventListener('resize', resize); resize();
-  (function loop(){
-    ctx.clearRect(0,0,W,H);
-    for(const p of pts){
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.y>H) p.y=0, p.x=Math.random()*W;
-      if(p.x>W) p.x=0; if(p.x<0) p.x=W;
-      ctx.fillStyle=`rgba(160,180,255,${p.a})`;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    requestAnimationFrame(loop);
-  })();
-
-  /* ===== Observer para revelar seções e cards ao rolar ===== */
-  const io = new IntersectionObserver((es)=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('active'); }
-    });
-  },{threshold:.18});
+  (function loop(){ ctx.clearRect(0,0,W,H); for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.y>H)p.y=0,p.x=Math.random()*W;if(p.x>W)p.x=0;if(p.x<0)p.x=W;ctx.fillStyle=`rgba(160,180,255,${p.a})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill(); } requestAnimationFrame(loop); })();
+  const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('active'); } }); },{threshold:.18});
   document.querySelectorAll('section,.card').forEach(el=>io.observe(el));
-
-  /* ===== Transição com “explosão” de partículas ao trocar de âncora ===== */
-  const burst = document.getElementById('burst');
-  const bctx = burst.getContext('2d');
+  const burst = document.getElementById('burst'); const bctx = burst.getContext('2d');
   function burstResize(){ burst.width=innerWidth; burst.height=innerHeight; }
   addEventListener('resize', burstResize); burstResize();
-
-  function particleBurst(){
-    burst.style.display='block';
-    const N=140;
-    const ps = Array.from({length:N}, ()=>({
-      x: innerWidth/2 + (Math.random()-0.5)*80,
-      y: innerHeight/2 + (Math.random()-0.5)*40,
-      vx:(Math.random()-0.5)*6,
-      vy:(Math.random()-0.6)*5 - 1,
-      r: Math.random()*3+1.2,
-      life: 1,
-      hue: Math.random()<.5 ? 265 : 190
-    }));
-    let t=0;
-    function tick(){
-      bctx.clearRect(0,0,burst.width,burst.height);
-      for(const p of ps){
-        p.x+=p.vx; p.y+=p.vy; p.vy+=0.04; p.life-=0.015;
-        if(p.life<=0) continue;
-        bctx.fillStyle=`hsla(${p.hue},85%,70%,${p.life})`;
-        bctx.beginPath(); bctx.arc(p.x,p.y,p.r,0,Math.PI*2); bctx.fill();
-      }
-      t+=1;
-      if(t<90){ requestAnimationFrame(tick); }
-      else { burst.style.display='none'; }
-    }
-    tick();
-  }
-
-  // Clique no menu: rolar + transição
-  const links = document.querySelectorAll('header a');
-  links.forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const to = document.querySelector(a.getAttribute('href'));
-      const current = document.querySelector('section.active');
-      if(current && current!==to){ current.classList.add('out'); setTimeout(()=>current.classList.remove('out'),600); }
-      burst.scrollTo?.(0,0); // só pra garantir
-      particleBurst();
-      to.scrollIntoView({behavior:'smooth', block:'start'});
-      // marca ativo quando chegar
-      setTimeout(()=>{ document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); to.classList.add('active'); }, 400);
-    });
-  });
-
-  // Garante seção ativa adequada no load (hash/sem hash)
-  window.addEventListener('load', ()=>{
-    const target = document.querySelector(location.hash || '#home');
-    if(target){ target.classList.add('active'); target.scrollIntoView(); }
-  });
+  function particleBurst(){ burst.style.display='block'; const N=140; const ps=Array.from({length:N},()=>({x:innerWidth/2+(Math.random()-.5)*80,y:innerHeight/2+(Math.random()-.5)*40,vx:(Math.random()-.5)*6,vy:(Math.random()-.6)*5-1,r:Math.random()*3+1.2,life:1,hue:Math.random()<.5?265:190})); let t=0; function tick(){ bctx.clearRect(0,0,burst.width,burst.height); for(const p of ps){ p.x+=p.vx; p.y+=p.vy; p.vy+=0.04; p.life-=0.015; if(p.life<=0) continue; bctx.fillStyle=`hsla(${p.hue},85%,70%,${p.life})`; bctx.beginPath(); bctx.arc(p.x,p.y,p.r,0,Math.PI*2); bctx.fill(); } t+=1; if(t<90){ requestAnimationFrame(tick); }else{burst.style.display='none';}} tick();}
+  const links = document.querySelectorAll('header a'); links.forEach(a=>{ a.addEventListener('click',(e)=>{ e.preventDefault(); const to=document.querySelector(a.getAttribute('href')); const current=document.querySelector('section.active'); if(current&&current!==to){current.classList.add('out'); setTimeout(()=>current.classList.remove('out'),600);} burst.scrollTo?.(0,0); particleBurst(); to.scrollIntoView({behavior:'smooth',block:'start'}); setTimeout(()=>{document.querySelectorAll('section').forEach(s=>s.classList.remove('active')); to.classList.add('active');},400); });});
+  window.addEventListener('load',()=>{ const target=document.querySelector(location.hash||'#home'); if(target){target.classList.add('active'); target.scrollIntoView();}});
 </script>
 </body>
-  </html>
+</html>
+
