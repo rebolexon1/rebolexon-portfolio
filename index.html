@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -135,7 +135,4 @@ let W,H,pts=[];
 function resize(){W=stars.width=innerWidth;H=stars.height=innerHeight;pts=Array.from({length:120},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.5,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()}));}
 addEventListener('resize',resize);resize();
 (function loop(){ctx.clearRect(0,0,W,H);for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x>W)p.x=0;if(p.x<0)p.x=W;if(p.y>H)p.y=0;if(p.y<0)p.y=H;ctx.fillStyle=`rgba(255,255,255,${p.a})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(loop);})();
-</script>
-</body>
-</html>
 
